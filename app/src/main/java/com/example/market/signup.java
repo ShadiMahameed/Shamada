@@ -89,6 +89,11 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                 {
                     Toast.makeText(getApplicationContext(),"User Registered Successfully",Toast.LENGTH_LONG).show();
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Error Occourred",Toast.LENGTH_LONG).show();
+
+                }
             }
         });
     }
