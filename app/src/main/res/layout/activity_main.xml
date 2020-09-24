@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <Button
-        android:id="@+id/btnSignup"
+        android:id="@+id/btnSignup1"
         android:layout_width="266dp"
         android:layout_height="62dp"
         android:layout_marginTop="25dp"
@@ -28,20 +28,20 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <EditText
-        android:id="@+id/txtPassword"
+        android:id="@+id/txtPasslogin"
         android:layout_width="344dp"
         android:layout_height="65dp"
         android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="@string/password"
-        app:layout_constraintEnd_toEndOf="@+id/txtEmail"
+        app:layout_constraintEnd_toEndOf="@+id/txtEmaillogin"
         app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/txtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+        app:layout_constraintStart_toStartOf="@+id/txtEmaillogin"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmaillogin"
         android:importantForAutofill="no" />
 
     <EditText
-        android:id="@+id/txtEmail"
+        android:id="@+id/txtEmaillogin"
         android:layout_width="344dp"
         android:layout_height="65dp"
         android:ems="10"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword">
+        app:layout_constraintTop_toBottomOf="@+id/txtPasslogin">
 
         <RadioButton
             android:id="@+id/rdbtndriver"

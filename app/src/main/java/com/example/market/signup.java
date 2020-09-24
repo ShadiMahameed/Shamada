@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,9 +34,9 @@ public class signup extends AppCompatActivity implements View.OnClickListener
 
         // t3refat
         txtname=(EditText)findViewById(R.id.txtName);
-        txtemail=(EditText)findViewById(R.id.txtEmail2);
-        txtpass=(EditText)findViewById(R.id.txtPassword2);
-        txtpass2=(EditText)findViewById(R.id.txtPass2);
+        txtemail=(EditText)findViewById(R.id.txtEmailsign);
+        txtpass=(EditText)findViewById(R.id.txtPasssign);
+        txtpass2=(EditText)findViewById(R.id.txtPasssign2);
         findViewById(R.id.btnSignup2).setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
     }
@@ -91,7 +92,10 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"Error Occourred",Toast.LENGTH_LONG).show();
+                    if(task.getException() instanceof FirebaseAuthUserCollisionException)
+                    Toast.makeText(getApplicationContext(),"Email Already Registered",Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
 
                 }
             }

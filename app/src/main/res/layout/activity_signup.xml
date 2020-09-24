@@ -14,7 +14,7 @@
         app:layout_constraintGuide_begin="140dp" />
 
     <EditText
-        android:id="@+id/txtEmail2"
+        android:id="@+id/txtEmailsign"
         android:layout_width="344dp"
         android:layout_height="65dp"
         android:layout_marginTop="15dp"
@@ -38,20 +38,20 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <EditText
-        android:id="@+id/txtPassword2"
+        android:id="@+id/txtPasssign"
         android:layout_width="344dp"
         android:layout_height="65dp"
         android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/txtEmail2"
-        app:layout_constraintStart_toStartOf="@+id/txtEmail2"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail2"
+        app:layout_constraintEnd_toEndOf="@+id/txtEmailsign"
+        app:layout_constraintStart_toStartOf="@+id/txtEmailsign"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailsign"
         android:autofillHints="no" />
 
     <EditText
-        android:id="@+id/txtPass2"
+        android:id="@+id/txtPasssign2"
         android:layout_width="344dp"
         android:layout_height="65dp"
         android:layout_marginTop="15dp"
@@ -59,18 +59,18 @@
         android:ems="10"
         android:hint="@string/verify_password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/txtPassword2"
-        app:layout_constraintStart_toStartOf="@+id/txtPassword2"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword2" />
+        app:layout_constraintEnd_toEndOf="@+id/txtPasssign"
+        app:layout_constraintStart_toStartOf="@+id/txtPasssign"
+        app:layout_constraintTop_toBottomOf="@+id/txtPasssign" />
 
     <RadioGroup
         android:id="@+id/radioGroup2"
         android:layout_width="114dp"
         android:layout_height="64dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/txtPass2"
-        app:layout_constraintStart_toStartOf="@+id/txtPass2"
-        app:layout_constraintTop_toBottomOf="@+id/txtPass2">
+        app:layout_constraintEnd_toEndOf="@+id/txtPasssign2"
+        app:layout_constraintStart_toStartOf="@+id/txtPasssign2"
+        app:layout_constraintTop_toBottomOf="@+id/txtPasssign2">
 
         <RadioButton
             android:id="@+id/rdbtndriver"
