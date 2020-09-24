@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Admin">
 
+    <TextView
+        android:id="@+id/showPrice"
+        android:layout_width="215dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/showName" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
@@ -23,7 +33,7 @@
         app:layout_constraintGuide_end="220dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addProduct"
         android:layout_width="156dp"
         android:layout_height="48dp"
         android:text="@string/add_product"
@@ -67,35 +77,14 @@
         android:layout_width="57dp"
         android:layout_height="47dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/newImage"
+        app:layout_constraintStart_toStartOf="@+id/newImage"
+        app:layout_constraintTop_toBottomOf="@+id/newImage"
         app:srcCompat="@android:drawable/ic_menu_camera"
         android:contentDescription="@string/todo" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="370dp"
-        android:layout_height="426dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ListOfProducts"
-            android:layout_width="376dp"
-            android:layout_height="425dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/newImage"
         android:layout_width="161dp"
         android:layout_height="101dp"
         android:layout_marginTop="15dp"
@@ -104,5 +93,34 @@
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:srcCompat="@android:drawable/ic_menu_gallery"
         android:contentDescription="@string/todo" />
+
+    <TextView
+        android:id="@+id/showName"
+        android:layout_width="224dp"
+        android:layout_height="40dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <ImageView
+        android:id="@+id/showImage"
+        android:layout_width="213dp"
+        android:layout_height="238dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/showPrice"
+        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000" />
+
+    <Button
+        android:id="@+id/nextProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="next"
+        app:layout_constraintEnd_toEndOf="@+id/showImage"
+        app:layout_constraintStart_toStartOf="@+id/showImage"
+        app:layout_constraintTop_toBottomOf="@+id/showImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

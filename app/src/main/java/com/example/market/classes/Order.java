@@ -1,5 +1,7 @@
 package com.example.market.classes;
 
+import com.example.market.classes.Product;
+
 import java.util.ArrayList;
 
 public class Order {

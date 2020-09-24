@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
-        myRef.setValue("hamada zebe");
+        myRef.setValue("hamada 6eze");
 
     }
     private void userLogin()
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v)
     {
         if(v.getId()==(R.id.btnSignup1))
-            startActivity(new Intent(this,signup.class));
+            startActivity(new Intent(getApplicationContext(),signup.class));
         else
             {
             if (v.getId() == (R.id.btnLogin))
