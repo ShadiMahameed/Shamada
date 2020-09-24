@@ -34,11 +34,12 @@
         android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="@string/password"
+        android:importantForAutofill="no"
+        android:password="true"
         app:layout_constraintEnd_toEndOf="@+id/txtEmaillogin"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="@+id/txtEmaillogin"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmaillogin"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmaillogin" />
 
     <EditText
         android:id="@+id/txtEmaillogin"

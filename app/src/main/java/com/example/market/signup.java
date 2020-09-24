@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class signup extends AppCompatActivity implements View.OnClickListener
 {
-    EditText txtname , txtemail , txtpass,txtpass2;
+    EditText txtname , txtemail , txtpass , txtpass2;
     RadioGroup rgb;
     private FirebaseAuth mAuth;
     DatabaseReference reff;
