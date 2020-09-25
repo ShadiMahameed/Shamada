@@ -147,7 +147,7 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
                         }
                         else{
                             Product p =new Product(name,price,imageUrl);
-                            myRef.push().setValue(p);
+                            myRef.child(name).setValue(p);
                             Toast.makeText(getApplicationContext(),"Product Added",Toast.LENGTH_LONG).show();
                             prodname.setText("");
                             prodprice.setText("");
