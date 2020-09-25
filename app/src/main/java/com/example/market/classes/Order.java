@@ -16,7 +16,7 @@ public class Order {
     private void calculatePrice(){
         price=20;
         for(int i=0;i<products.size();i++) {
-            price+=products.get(i).getPrice();
+            //price+=products.get(i).getPrice();
         }
     }
 

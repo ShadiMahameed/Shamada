@@ -4,12 +4,12 @@ import android.net.Uri;
 
 public class Product {
     private String name;
-    private float price;
+    private String price;
     private String imageURL;
 
     public Product(String n,String p,String i){
         name=n;
-        price=Float.parseFloat(p);
+        price=(p);
         imageURL=i;
     }
 
@@ -21,7 +21,7 @@ public class Product {
         this.name = name;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -33,7 +33,7 @@ public class Product {
         this.imageURL = URL;
     }
 
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 }

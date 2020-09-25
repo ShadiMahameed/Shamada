@@ -2,6 +2,9 @@ package com.example.market;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.market.classes.Product;
+import com.example.market.classes.adminRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +40,9 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<Product> products;
 
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
 
 
     private EditText prodname;
@@ -57,6 +64,15 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+
+        recyclerView = findViewById(R.id.recyclerAdmin);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        products.add(new Product("haha","7.2","\"https://firebasestorage.googleapis.com/v0/b/market-4a476.appspot.com/o/images%2F0.4230189277096864?alt=media&token=96088b53-e1ee-418f-aaa4-abc600d18d7c\""));
+        adapter = new adminRecyclerAdapter(this, products);
+        recyclerView.setAdapter(adapter);
 
 
         prodname = findViewById(R.id.ProductName);/////
@@ -147,7 +163,7 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
                         }
                         else{
                             Product p =new Product(name,price,imageUrl);
-                            myRef.push().setValue(p);
+                            myRef.child(name).setValue(p);
                             Toast.makeText(getApplicationContext(),"Product Added",Toast.LENGTH_LONG).show();
                             prodname.setText("");
                             prodprice.setText("");
