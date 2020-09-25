@@ -2,7 +2,6 @@ package com.example.market;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.market.classes.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,20 +24,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.regex.Pattern;
+
 
 public class Admin extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<Product> products;
 
-    private TextView showprice;
-    private TextView showname;
-    private ImageView prodimage;
-    private Button nextprod;
+
+
     private EditText prodname;
     private EditText prodprice;
     private ImageView newimage;
@@ -50,23 +48,22 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
     DatabaseReference myRef;
 
     FirebaseStorage storage;
-    StorageReference storageRef;
     StorageReference ProductImagesRef;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        showprice = findViewById(R.id.showPrice);
-        showname = findViewById(R.id.showName);
-        prodimage = findViewById(R.id.showImage);
-        nextprod = findViewById(R.id.nextProduct);
+
+
         prodname = findViewById(R.id.ProductName);/////
         prodprice = findViewById(R.id.ProductPrice);////////////
         newimage = findViewById(R.id.newImage);
 
-        findViewById(R.id.nextProduct).setOnClickListener(this);
+
         findViewById(R.id.AddPic).setOnClickListener(this);
         findViewById(R.id.addProduct).setOnClickListener(this);
 
@@ -80,6 +77,8 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
 
 
     }
+
+
     @Override
     public void onClick(View v) {
 
@@ -92,7 +91,6 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
             startActivityForResult(photoPickerIntent, 1);
         }
 
-        if(v.getId() == R.id.nextProduct){}
 
     }
 
@@ -119,8 +117,6 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-
-
     private void AddNewProduct(){
         BitmapDrawable drawable = (BitmapDrawable) newimage.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
@@ -128,8 +124,8 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-
-        UploadTask uploadTask = ProductImagesRef.putBytes(data);
+        Random r =new Random();
+        UploadTask uploadTask = ProductImagesRef.child(r.nextDouble()+"").putBytes(data);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -144,8 +140,18 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onSuccess(Uri uri) {
                         String imageUrl = uri.toString();
-                        Product p =new Product(prodname.getText().toString().trim(),prodprice.getText().toString().trim(),imageUrl);
-                        myRef.push().setValue(p);
+                        String name=prodname.getText().toString().trim();
+                        String price=prodprice.getText().toString().trim();
+                        if(name.isEmpty() || price.isEmpty() || (!Pattern.compile("[0-9]*\\.?[0-9]+").matcher(price).matches())){
+                            Toast.makeText(getApplicationContext(),"Wrong Input",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Product p =new Product(name,price,imageUrl);
+                            myRef.push().setValue(p);
+                            Toast.makeText(getApplicationContext(),"Product Added",Toast.LENGTH_LONG).show();
+                            prodname.setText("");
+                            prodprice.setText("");
+                        }
                     }
                 });
 
