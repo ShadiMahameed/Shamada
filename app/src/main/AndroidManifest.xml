@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Admin"></activity>
         <activity android:name=".CostumerHome"></activity>
         <activity android:name=".CostumerSettings"></activity>
         <activity android:name=".CostumerHistory" />

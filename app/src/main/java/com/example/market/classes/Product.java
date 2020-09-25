@@ -1,18 +1,16 @@
 package com.example.market.classes;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.opengl.Matrix;
+import android.net.Uri;
 
 public class Product {
     private String name;
     private float price;
- //   private Drawable image;
+    private String image;
 
-    public Product(String n,String p){//, Drawable i){
+    public Product(String n,String p,String i){
         name=n;
         price=Float.parseFloat(p);
-       // image=i;
+        image=i;
     }
 
     public String getName() {
@@ -26,15 +24,15 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
-      /*
-    public Drawable getImage() {
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
+    public void setImage(String image) {
         this.image = image;
     }
-          */
+
     public float getPrice() {
         return price;
     }
