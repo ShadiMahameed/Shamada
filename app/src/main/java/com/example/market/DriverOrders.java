@@ -2,6 +2,7 @@ package com.example.market;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,10 +31,10 @@ public class DriverOrders extends AppCompatActivity {
                         break;
                     case R.id.nav_home_driver:
                         break;
-                   /* case R.id.nav_map:
-                        startActivity(new Intent(getApplicationContext(),DriverInventory.class));
+                    case R.id.nav_map:
+                        startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
                         overridePendingTransition(0,0);
-                        break;*/
+                        break;
                 }
 
                 return false;

@@ -17,4 +17,7 @@
     <string name="history">History</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
+    <string name="map_key" translatable="false">
+        AIzaSyCUgY5FNSqw-rgFqMf0b6pABps0AuSEGOg
+    </string>
 </resources>

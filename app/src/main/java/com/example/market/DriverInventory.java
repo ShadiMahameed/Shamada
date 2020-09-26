@@ -2,6 +2,7 @@ package com.example.market;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class DriverInventory extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         break;
                     case R.id.nav_map:
-                        startActivity(new Intent(getApplicationContext(),DriverInventory.class));
+                        startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
                         overridePendingTransition(0,0);
                         break;
                 }
