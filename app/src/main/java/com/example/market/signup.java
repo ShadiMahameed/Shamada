@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+
 public class signup extends AppCompatActivity implements View.OnClickListener
 {
     String Email,Name,Pass1,passw2;
@@ -76,6 +78,12 @@ public class signup extends AppCompatActivity implements View.OnClickListener
         if(Name.isEmpty())
         {
             txtname.setError("Name is required");
+            txtname.requestFocus();
+            return;
+        }
+        if(!Pattern.compile("[0-9A-Za-z]*").matcher(Name).matches())
+        {
+            txtname.setError("Invalid username, Can only contain letters and numbers");
             txtname.requestFocus();
             return;
         }

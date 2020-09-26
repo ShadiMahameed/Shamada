@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     String Name,Password,Email,Type;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText txtEmail,txtPassword;
     FirebaseDatabase database;
     DatabaseReference  myRef;
-    User user;
+    static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -47,7 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Name = txtEmail.getText().toString().trim();
         Password=txtPassword.getText().toString().trim();
         if (Name.isEmpty()) {
-            txtEmail.setError("Email is required");
+            txtEmail.setError("Username is required");
+            txtEmail.requestFocus();
+            return;
+        }
+        if(!Pattern.compile("[0-9A-Za-z]*").matcher(Name).matches())
+        {
+            txtEmail.setError("Invalid username");
             txtEmail.requestFocus();
             return;
         }
@@ -100,11 +108,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_LONG).show();
                     if ("Costumer".equals(Type)) {
-                        startActivity(new Intent(getApplicationContext(),CostumerHome.class));
+                        startActivity(new Intent(getApplicationContext(), CostumerOrder.class));
                     }
                     else
                     if(Type.equals(("Driver")))
-                        startActivity(new Intent(getApplicationContext(),signup.class));
+                        startActivity(new Intent(getApplicationContext(),DriverOrders.class));
                     else
                     if(Type.equals("Admin"))
                         startActivity(new Intent(getApplicationContext(),Admin.class));
@@ -130,5 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
+    public static User getUser() {
+        return user;
+    }
 }

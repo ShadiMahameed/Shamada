@@ -1,20 +1,25 @@
 package com.example.market;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class CostumerHome extends AppCompatActivity {
+public class CostumerOrder extends AppCompatActivity {
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_costumer_profile);
+        setContentView(R.layout.activity_costumer_order);
+
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
@@ -29,11 +34,6 @@ public class CostumerHome extends AppCompatActivity {
                         break;
                     case R.id.nav_home:
                         break;
-                    case R.id.nav_settings:
-                        startActivity(new Intent(getApplicationContext(),CostumerSettings.class));
-                        overridePendingTransition(0,0);
-                        break;
-
                 }
                 return false;
             }

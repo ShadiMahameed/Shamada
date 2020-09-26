@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/nav_home_driver"
+        android:title="home"
+        android:icon="@drawable/ic_baseline_home_24"
+        />
+
+    <item
+        android:id="@+id/nav_inventory"
+        android:title="inventory"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+        />
+
+    <item
+        android:id="@+id/nav_map"
+        android:title="navigate"
+        android:icon="@drawable/ic_baseline_navigation_24"
+        />
+
+</menu>
