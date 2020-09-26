@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 
 public class Admin extends AppCompatActivity implements View.OnClickListener {
 
-    private ArrayList<Product> products;
+    private ArrayList<Product> products = new ArrayList<>();
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -70,7 +70,11 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        products.add(new Product("haha","7.2","\"https://firebasestorage.googleapis.com/v0/b/market-4a476.appspot.com/o/images%2F0.4230189277096864?alt=media&token=96088b53-e1ee-418f-aaa4-abc600d18d7c\""));
+        Product p1 = new Product("haha","7.2","https://firebasestorage.googleapis.com/v0/b/market-4a476.appspot.com/o/images%2F0.4230189277096864?alt=media&token=96088b53-e1ee-418f-aaa4-abc600d18d7c");
+        Product p2 = new Product("hahaha","71.2","https://firebasestorage.googleapis.com/v0/b/market-4a476.appspot.com/o/images%2F0.1189654691559695?alt=media&token=0f17c4ed-0b68-4bcd-943f-7bb465177679");
+        products.add(p1);
+        products.add(p2);
+
         adapter = new adminRecyclerAdapter(this, products);
         recyclerView.setAdapter(adapter);
 
