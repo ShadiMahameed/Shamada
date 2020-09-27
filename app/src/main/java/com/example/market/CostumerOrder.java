@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.market.classes.CostumerOrderAdapter;
 import com.example.market.classes.Product;
 import com.example.market.classes.adminRecyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,7 +29,7 @@ public class CostumerOrder extends AppCompatActivity {
     DatabaseReference  myRef;
     RecyclerView recyclerView;
     ArrayList<Product> products;
-    adminRecyclerAdapter adapter;
+    CostumerOrderAdapter adapter;
     Product product;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -38,7 +39,7 @@ public class CostumerOrder extends AppCompatActivity {
 
         recyclerView=(RecyclerView) findViewById(R.id.recyclerOrderCostumer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        products=new ArrayList<Product>();
+        products=new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Product");
@@ -47,12 +48,10 @@ public class CostumerOrder extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
-                    Object o = snapshot.getChildren();
-                     System.out.println(o.toString());
-                    //product=dataSnapshot.getValue(Product.class);
+                    product=dataSnapshot.getValue(Product.class);
                     products.add(product);
                 }
-                adapter = new adminRecyclerAdapter(CostumerOrder.this,products);
+                adapter = new CostumerOrderAdapter(CostumerOrder.this,products);
                 recyclerView.setAdapter(adapter);
             }
 
