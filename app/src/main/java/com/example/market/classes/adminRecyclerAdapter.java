@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.market.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -30,16 +33,24 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
     Context context;
     ArrayList<Product> products;
 
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView price;
         ImageView image;
+        ImageButton delButton;
+        int pos;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.productName);
             price=itemView.findViewById(R.id.productPrice);
             image=itemView.findViewById(R.id.productImage);
+            delButton=itemView.findViewById(R.id.deleteButton);
         }
 
     }
@@ -47,6 +58,8 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
     public adminRecyclerAdapter(Context context, ArrayList<Product> products) {
         this.context = context;
         this.products = products;
+        this.database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Product");
     }
 
     @NonNull
@@ -59,12 +72,23 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
         return viewHolder;
     }
 
+
+
+
     @Override
     public void onBindViewHolder(@NonNull final adminRecyclerAdapter.ViewHolder holder, int position) {
 
         holder.name.setText(products.get(position).getName());
         holder.price.setText(products.get(position).getPrice());
         Picasso.get().load(products.get(position).getImageURL()).into(holder.image);
+        holder.pos=position;
+        holder.delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.child(products.get(holder.pos).getName()).removeValue();
+
+            }
+        });
 
 
 

@@ -30,6 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,6 +38,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -58,6 +60,7 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
 
     FirebaseDatabase database;
     DatabaseReference myRef;
+
 
     FirebaseStorage storage;
     StorageReference ProductImagesRef;
@@ -87,47 +90,34 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
         newimage = findViewById(R.id.newImage);
 
 
-        findViewById(R.id.AddPic).setOnClickListener(this);
-        findViewById(R.id.addProduct).setOnClickListener(this);
+
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference().child("Product");
+        myRef = database.getReference("Product");
 
         storage = FirebaseStorage.getInstance();
         ProductImagesRef = storage.getReference().child("images");
 
-        ArrayAdapter<Product> arrayAdapter = new ArrayAdapter<Product>(this,android.R.layout.simple_expandable_list_item_1,products);
-
-
-        myRef.addChildEventListener(new ChildEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Product p = snapshot.getValue(Product.class);
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                products.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    Product product = dataSnapshot.getValue(Product.class);
+                    products.add(product);
+                }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+        findViewById(R.id.AddPic).setOnClickListener(this);
+        findViewById(R.id.addProduct).setOnClickListener(this);
+
 
 
     }
@@ -201,7 +191,6 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
                         }
                         else{
                             Product p =new Product(name,price,imageUrl);
-                            products.add(p);
                             myRef.child(name).setValue(p);
                             Toast.makeText(getApplicationContext(),"Product Added",Toast.LENGTH_LONG).show();
                             prodname.setText("");
