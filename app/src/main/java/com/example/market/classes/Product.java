@@ -7,12 +7,21 @@ public class Product {
     private String price;
     private String imageURL;
 
-//
 
     public Product(String n,String p,String i){
         name=n;
         price=(p);
         imageURL=i;
+    }
+    public Product(Product p)
+    {
+        name=p.getName();
+        price=p.getPrice();
+        imageURL=p.getImageURL();
+    }
+
+    public Product() {
+
     }
 
     public String getName() {
@@ -23,19 +32,20 @@ public class Product {
         this.name = name;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
     public void setPrice(String price) {
         this.price = price;
     }
 
-    public String getImage() {
+    public String getImageURL() {
         return imageURL;
     }
 
-    public void setImage(String URL) {
-        this.imageURL = URL;
-    }
-
-    public String getPrice() {
-        return price;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
+

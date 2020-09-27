@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.market.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -33,33 +30,18 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
     Context context;
     ArrayList<Product> products;
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView price;
         ImageView image;
-        ImageButton delProduct;
-        int Position;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.productName);
             price=itemView.findViewById(R.id.productPrice);
             image=itemView.findViewById(R.id.productImage);
-            delProduct=itemView.findViewById(R.id.deleteButton);
-
-
         }
 
-        public void setListeners() {
-        delProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Product/"+products.get(Position).getName());
-                db.removeValue();
-                products.remove(Position);
-            }
-        });
-        }
     }
 
     public adminRecyclerAdapter(Context context, ArrayList<Product> products) {
@@ -82,9 +64,7 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
 
         holder.name.setText(products.get(position).getName());
         holder.price.setText(products.get(position).getPrice());
-        Picasso.get().load(products.get(position).getImage()).into(holder.image);
-        holder.Position=position;
-        holder.setListeners();
+        Picasso.get().load(products.get(position).getImageURL()).into(holder.image);
 
 
 
@@ -95,9 +75,4 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
     public int getItemCount() {
         return products.size();
     }
-
-
-
-
-
 }
