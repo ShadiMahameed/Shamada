@@ -1,40 +1,29 @@
 package com.example.market.classes;
 
+import java.util.List;
+
 public class Inventory {
-    private Product Product;
-    private String Driver;
-    private String Quantity;
+    private List<QuanProduct> products;
+    private String DriverName;
 
-    public Inventory() {
+    public Inventory(List<QuanProduct> products, String driverName) {
+        this.products = products;
+        DriverName = driverName;
     }
 
-    public Inventory(com.example.market.classes.Product product, String driver, String quantity) {
-        Product = product;
-        Driver = driver;
-        Quantity = quantity;
+    public List<QuanProduct> getProducts() {
+        return products;
     }
 
-    public com.example.market.classes.Product getProduct() {
-        return Product;
+    public void setProducts(List<QuanProduct> products) {
+        this.products = products;
     }
 
-    public void setProduct(com.example.market.classes.Product product) {
-        Product = product;
+    public String getDriverName() {
+        return DriverName;
     }
 
-    public String getDriver() {
-        return Driver;
-    }
-
-    public void setDriver(String driver) {
-        Driver = driver;
-    }
-
-    public String getQuantity() {
-        return Quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        Quantity = quantity;
+    public void setDriverName(String driverName) {
+        DriverName = driverName;
     }
 }

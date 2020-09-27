@@ -4,20 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Driver extends User {
-   private List<Inventory> inventories=new ArrayList<Inventory>();
+    private Inventory inventory;
 
-    public List<Inventory> getInventories() {
-        return inventories;
+    public Driver(String name, String email, String type, String phone, Inventory inventory) {
+        super(name, email, type, phone);
+        this.inventory = inventory;
     }
 
-    public Driver () {
+    public Inventory getInventory() {
+        return inventory;
     }
 
-    public Driver(List<Inventory> inventories) {
-        this.inventories = inventories;
-    }
-
-    public void setInventories(List<Inventory> inventories) {
-        this.inventories = inventories;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }
