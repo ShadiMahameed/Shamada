@@ -1,6 +1,7 @@
 package com.example.market;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +25,9 @@ import com.example.market.classes.adminRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,7 +41,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 
-public class Admin extends AppCompatActivity implements View.OnClickListener {
+public class Admin extends AppCompatActivity implements View.OnClickListener  {
 
     private ArrayList<Product> products = new ArrayList<>();
 
@@ -70,10 +75,8 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Product p1 = new Product("haha","7.2","https://firebasestorage.googleapis.com/v0/b/market-4a476.appspot.com/o/images%2F0.4230189277096864?alt=media&token=96088b53-e1ee-418f-aaa4-abc600d18d7c");
-        Product p2 = new Product("hahaha","71.2","https://firebasestorage.googleapis.com/v0/b/market-4a476.appspot.com/o/images%2F0.1189654691559695?alt=media&token=0f17c4ed-0b68-4bcd-943f-7bb465177679");
-        products.add(p1);
-        products.add(p2);
+
+
 
         adapter = new adminRecyclerAdapter(this, products);
         recyclerView.setAdapter(adapter);
@@ -93,7 +96,38 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
         storage = FirebaseStorage.getInstance();
         ProductImagesRef = storage.getReference().child("images");
 
+        ArrayAdapter<Product> arrayAdapter = new ArrayAdapter<Product>(this,android.R.layout.simple_expandable_list_item_1,products);
 
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Product p = snapshot.getValue(Product.class);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
     }
@@ -167,10 +201,12 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
                         }
                         else{
                             Product p =new Product(name,price,imageUrl);
+                            products.add(p);
                             myRef.child(name).setValue(p);
                             Toast.makeText(getApplicationContext(),"Product Added",Toast.LENGTH_LONG).show();
                             prodname.setText("");
                             prodprice.setText("");
+
                         }
                     }
                 });
