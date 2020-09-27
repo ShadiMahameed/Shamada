@@ -7,21 +7,28 @@
     android:scrollbars="vertical"
     tools:context=".Admin">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAdmin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="39dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="141dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_end="220dp" />
 
     <Button
         android:id="@+id/addProduct"
@@ -31,6 +38,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/AddPic"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/AddPic" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="141dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_end="220dp" />
 
     <EditText
         android:id="@+id/ProductName"
@@ -85,19 +101,5 @@
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerAdmin"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

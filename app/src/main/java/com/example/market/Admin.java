@@ -51,6 +51,8 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
+    ImageButton deletestuff;
+
 
     private EditText prodname;
     private EditText prodprice;
@@ -77,6 +79,7 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
 
 
 
@@ -189,9 +192,9 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
                             Product p =new Product(name,price,imageUrl);
                             myRef.child(name).setValue(p);
                             Toast.makeText(getApplicationContext(),"Product Added",Toast.LENGTH_LONG).show();
-                            prodname.setText("");
-                            prodprice.setText("");
 
+                            finish();
+                            startActivity(getIntent());
                         }
                     }
                 });

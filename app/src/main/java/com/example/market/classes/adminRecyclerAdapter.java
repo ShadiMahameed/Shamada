@@ -2,6 +2,7 @@ package com.example.market.classes;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.market.Admin;
+import com.example.market.CostumerOrder;
 import com.example.market.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -76,17 +79,18 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
 
 
     @Override
-    public void onBindViewHolder(@NonNull final adminRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final adminRecyclerAdapter.ViewHolder holder, final int position) {
 
         holder.name.setText(products.get(position).getName());
         holder.price.setText(products.get(position).getPrice());
         Picasso.get().load(products.get(position).getImageURL()).into(holder.image);
         holder.pos=position;
+
         holder.delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRef.child(products.get(holder.pos).getName()).removeValue();
-
+                myRef.child(products.get(holder.getAdapterPosition()).getName()).removeValue();
+                context.startActivity(new Intent(context.getApplicationContext(), Admin.class));
             }
         });
 
