@@ -7,7 +7,7 @@ public class Product {
     private String price;
     private String imageURL;
 
-
+//
 
     public Product(String n,String p,String i){
         name=n;
