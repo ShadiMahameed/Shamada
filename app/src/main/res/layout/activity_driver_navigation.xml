@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/activity_driver_navigation" />
 
+
     <SearchView
         android:id="@+id/sv_location"
         android:layout_width="match_parent"
