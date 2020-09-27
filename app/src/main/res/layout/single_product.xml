@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:accessibilityLiveRegion="none"
     android:addStatesFromChildren="true"
-    android:background="#B6B6B6"
-    android:fadingEdge="none"
-    app:barrierMargin="@dimen/cast_expanded_controller_margin_between_seek_bar_and_control_buttons">
+    android:background="#88CAFF"
+    android:fadingEdge="vertical"
+    android:fadingEdgeLength="20dp">
 
     <ImageView
         android:id="@+id/productImage"

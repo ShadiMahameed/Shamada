@@ -3,6 +3,7 @@ package com.example.market.classes;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -15,6 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.market.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,17 +60,15 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull adminRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final adminRecyclerAdapter.ViewHolder holder, int position) {
 
         holder.name.setText(products.get(position).getName());
         holder.price.setText(products.get(position).getPrice());
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(products.get(position).getImage()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        holder.image.setImageBitmap(bitmap);
+        Picasso.get().load(products.get(position).getImage()).into(holder.image);
+
+
+
+
     }
 
     @Override
