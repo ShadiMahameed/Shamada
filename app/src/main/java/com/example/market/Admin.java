@@ -108,7 +108,6 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
                     products.add(product);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -117,9 +116,6 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
 
         findViewById(R.id.AddPic).setOnClickListener(this);
         findViewById(R.id.addProduct).setOnClickListener(this);
-
-
-
     }
 
 

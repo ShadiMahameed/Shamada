@@ -10,6 +10,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.market.classes.CostumerOrderAdapter;
 import com.example.market.classes.Product;
@@ -31,6 +35,7 @@ public class CostumerOrder extends AppCompatActivity {
     ArrayList<Product> products;
     CostumerOrderAdapter adapter;
     Product product;
+    ImageButton btnClear,btnGotoCart;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,22 @@ public class CostumerOrder extends AppCompatActivity {
         recyclerView=(RecyclerView) findViewById(R.id.recyclerOrderCostumer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         products=new ArrayList<>();
+        btnClear=(ImageButton) findViewById(R.id.btnclearCart);
+        btnGotoCart=(ImageButton) findViewById(R.id.btngoCart);
+        btnGotoCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Move To Payment",Toast.LENGTH_LONG).show();
+            }
+        });
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Cart is Empty",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Product");
