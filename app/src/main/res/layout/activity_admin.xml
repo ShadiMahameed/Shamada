@@ -7,6 +7,18 @@
     android:scrollbars="vertical"
     tools:context=".Admin">
 
+    <EditText
+        android:id="@+id/ProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/product_name"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerAdmin"
         android:layout_width="0dp"
@@ -47,18 +59,6 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintGuide_end="220dp" />
-
-    <EditText
-        android:id="@+id/ProductName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/product_name"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"

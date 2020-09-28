@@ -81,8 +81,8 @@ public class adminRecyclerAdapter extends RecyclerView.Adapter<adminRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull final adminRecyclerAdapter.ViewHolder holder, final int position) {
 
-        holder.name.setText(products.get(position).getName());
-        holder.price.setText(products.get(position).getPrice());
+        holder.name.setText("\nProduct name: \n" + products.get(position).getName());
+        holder.price.setText("Price: "+ products.get(position).getPrice());
         Picasso.get().load(products.get(position).getImageURL()).into(holder.image);
         holder.pos=position;
 

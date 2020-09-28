@@ -101,6 +101,7 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
         storage = FirebaseStorage.getInstance();
         ProductImagesRef = storage.getReference().child("images");
 
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,6 +117,7 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
 
             }
         });
+
 
         findViewById(R.id.AddPic).setOnClickListener(this);
         findViewById(R.id.addProduct).setOnClickListener(this);
