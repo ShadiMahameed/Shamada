@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.market.classes.CostumerOrderAdapter;
 import com.example.market.classes.Product;
+import com.example.market.classes.QuanProduct;
 import com.example.market.classes.adminRecyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +33,7 @@ public class CostumerOrder extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference  myRef;
     RecyclerView recyclerView;
-    ArrayList<Product> products;
+    ArrayList<QuanProduct> products;
     CostumerOrderAdapter adapter;
     Product product;
     ImageButton btnClear,btnGotoCart;
@@ -70,7 +71,7 @@ public class CostumerOrder extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
                     product=dataSnapshot.getValue(Product.class);
-                    products.add(product);
+                    products.add(new QuanProduct(product,0));
                 }
                 adapter = new CostumerOrderAdapter(CostumerOrder.this,products);
                 recyclerView.setAdapter(adapter);
@@ -81,6 +82,15 @@ public class CostumerOrder extends AppCompatActivity {
 
             }
         });
+
+        findViewById(R.id.btnclearCart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(getIntent());
+            }
+        });
+
 
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);

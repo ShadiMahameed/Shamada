@@ -8,6 +8,10 @@ public class QuanProduct extends Product {
     public QuanProduct(String n, String p, String i) {
         super(n, p, i);
     }
+    public QuanProduct(Product p,int quan){
+        super(p);
+        quantity=0;
+    }
 
 
     public int getQuantity() {
