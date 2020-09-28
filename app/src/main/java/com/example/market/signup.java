@@ -3,11 +3,13 @@ package com.example.market;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -30,8 +32,9 @@ import java.util.regex.Pattern;
 
 public class signup extends AppCompatActivity implements View.OnClickListener
 {
-    String Email,Name,Pass1,passw2;
-    EditText txtname , txtemail , txtpass , txtpass2;
+    String Email,Name,Pass1,passw2,phone;
+    EditText txtname , txtemail , txtpass , txtpass2 , txtphone;
+    ImageButton btnHome;
     RadioGroup rgb;
     User user;
     RadioButton radioButton;
@@ -49,7 +52,9 @@ public class signup extends AppCompatActivity implements View.OnClickListener
         txtemail=(EditText)findViewById(R.id.txtEmailsign);
         txtpass=(EditText)findViewById(R.id.txtPasssign);
         txtpass2=(EditText)findViewById(R.id.txtPasssign2);
+        txtphone=(EditText)findViewById(R.id.txtSignPhone);
         rgb=(RadioGroup)findViewById(R.id.radioGroup2);
+        findViewById(R.id.btnBackHome).setOnClickListener(this);
         findViewById(R.id.btnSignup2).setOnClickListener(this);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference().child("User");
@@ -60,6 +65,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
          Name = txtname.getText().toString().trim();
          Pass1 = txtpass.getText().toString().trim();
          passw2 = txtpass2.getText().toString().trim();
+         phone=txtphone.getText().toString().trim();
 
 
 
@@ -137,14 +143,36 @@ public class signup extends AppCompatActivity implements View.OnClickListener
             radioButton=(RadioButton) findViewById(rgb.getCheckedRadioButtonId());
         }
 
+        if(phone.isEmpty())
+        {
+            txtphone.setError("Phone is required");
+            txtphone.requestFocus();
+            return;
+        }
+
+        if(!Pattern.compile("[0-9]*").matcher(phone).matches())
+        {
+            txtphone.setError("Invalid Phone Number");
+            txtphone.requestFocus();
+            return;
+        }
+
+
         mAuth.createUserWithEmailAndPassword(Email,Pass1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
                     Toast.makeText(getApplicationContext(),"User Registered Successfully",Toast.LENGTH_LONG).show();
-                    user=new User(Name,Email,radioButton.getText().toString());
+                    user=new User(Name,Email,radioButton.getText().toString(),phone);
                     myRef.child(Name).setValue(user);
+
+                    if ("Costumer".equals(user.getType())) {
+                        startActivity(new Intent(getApplicationContext(), CostumerOrder.class));
+                    }
+                    else
+                    if(user.getType().equals(("Driver")))
+                        startActivity(new Intent(getApplicationContext(),DriverOrders.class));
                 }
                 else
                 {
@@ -161,5 +189,10 @@ public class signup extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         if(v.getId()==(R.id.btnSignup2))
             registerMember();
+        if(v.getId()==(R.id.btnBackHome))
+        {
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+        }
     }
 }
