@@ -12,7 +12,7 @@ public class QuanProduct extends Product {
         super(p);
         quantity=0;
     }
-
+//this is for commit
 
     public int getQuantity() {
         return quantity;
