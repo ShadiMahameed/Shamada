@@ -6,7 +6,7 @@
     android:background="#FFFFFF"
     android:orientation="horizontal"
     android:paddingBottom="5dp"
-    android:weightSum="3">
+    android:weightSum="2.5">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,12 +29,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/price"
+            android:text="@string/quantity"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/propriceinv"
+            android:id="@+id/proquaninv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -47,30 +47,24 @@
         <ImageView
             android:id="@+id/productPhotoinv"
             android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"/>
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="0.5">
 
 
         <EditText
             android:id="@+id/txtQttyinv"
             android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="15dp" />
-
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:background="@android:color/white"
-            app:srcCompat="@android:drawable/ic_menu_add" />
+            android:layout_height="60dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
 
 
     </LinearLayout>

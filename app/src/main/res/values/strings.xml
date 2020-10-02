@@ -20,4 +20,5 @@
     <string name="map_key" translatable="false">
         AIzaSyCUgY5FNSqw-rgFqMf0b6pABps0AuSEGOg
     </string>
+    <string name="quantity">Quantity</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class DriverInventoryAdapter extends RecyclerView.Adapter<DriverInventory
     @Override
     public void onBindViewHolder(@NonNull InventoryViewHolder holder, int position) {
         holder.pronamein.setText(quanProducts.get(position).getName());
-        holder.propricein.setText(quanProducts.get(position).getPrice());
+        holder.propricein.setText(quanProducts.get(position).getQuantity()+"");
         Picasso.get().load(quanProducts.get(position).getImageURL()).into(holder.proimagein);
     }
 
@@ -49,11 +50,13 @@ public class DriverInventoryAdapter extends RecyclerView.Adapter<DriverInventory
     {
         TextView propricein,pronamein;
         ImageView proimagein;
+        EditText addquan;
         public InventoryViewHolder(@NonNull View itemView) {
             super(itemView);
             pronamein = (TextView) itemView.findViewById(R.id.pronameinv);
-            propricein = (TextView) itemView.findViewById(R.id.propriceinv);
+            propricein = (TextView) itemView.findViewById(R.id.proquaninv);
             proimagein = (ImageView) itemView.findViewById(R.id.productPhotoinv);
+            addquan = (EditText) itemView.findViewById(R.id.txtQttyinv);
         }
     }
 

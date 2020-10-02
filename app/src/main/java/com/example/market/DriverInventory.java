@@ -57,11 +57,8 @@ public class DriverInventory extends AppCompatActivity {
                     product=dataSnapshot.getValue(Product.class);
                     products.add(new QuanProduct(product,0));
                 }
-                System.out.println(products.size()+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 driverInventoryAdapter = new DriverInventoryAdapter(DriverInventory.this,products);
-                System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 1111111111");
                 recyclerViewinv.setAdapter(driverInventoryAdapter);
-                System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOO 2222222222222");
             }
 
             @Override
