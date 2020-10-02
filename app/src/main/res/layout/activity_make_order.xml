@@ -7,7 +7,7 @@
     tools:context=".MakeOrder">
 
     <TextView
-        android:id="@+id/UserID"
+        android:id="@+id/UserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -27,9 +27,9 @@
         android:ems="10"
         android:hint="Insert Location"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/UserID"
-        app:layout_constraintStart_toStartOf="@+id/UserID"
-        app:layout_constraintTop_toBottomOf="@+id/UserID" />
+        app:layout_constraintEnd_toEndOf="@+id/UserName"
+        app:layout_constraintStart_toStartOf="@+id/UserName"
+        app:layout_constraintTop_toBottomOf="@+id/UserName" />
 
     <EditText
         android:id="@+id/PhoneNum"
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/YouWantToPay" />
 
     <Button
-        android:id="@+id/payCredit"
+        android:id="@+id/PayCredit"
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -84,5 +84,15 @@
         android:text="Credit Card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/YouWantToPay" />
+
+    <Button
+        android:id="@+id/returnBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Discard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PayCredit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

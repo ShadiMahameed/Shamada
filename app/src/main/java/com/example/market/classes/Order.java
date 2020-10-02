@@ -1,21 +1,22 @@
 package com.example.market.classes;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private List<Product> Products=new ArrayList<Product>();
+    private List<QuanProduct> Products=new ArrayList<QuanProduct>();
     private String Location;
     private String Price;
-    private DateTimeFormatter DateAndTime;
+    private LocalDateTime DateAndTime;
     private String CostumerName;
     private String Status;
 //ready new
     public Order() {
     }
 
-    public Order(ArrayList<Product> products, String location, DateTimeFormatter dateAndTime, String costumerName) {
+    public Order(ArrayList<QuanProduct> products, String location, LocalDateTime dateAndTime, String costumerName) {
         this.Products = products;
         Location = location;
         DateAndTime = dateAndTime;
@@ -33,11 +34,11 @@ public class Order {
         return totalprice+empty;
     }
 
-    public List<Product> getProducts() {
+    public List<QuanProduct> getProducts() {
         return Products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(ArrayList<QuanProduct> products) {
         Products = products;
     }
 
@@ -57,11 +58,15 @@ public class Order {
         Price = price;
     }
 
-    public DateTimeFormatter getDateAndTime() {
+    public void setProducts(List<QuanProduct> products) {
+        Products = products;
+    }
+
+    public LocalDateTime getDateAndTime() {
         return DateAndTime;
     }
 
-    public void setDateAndTime(DateTimeFormatter dateAndTime) {
+    public void setDateAndTime(LocalDateTime dateAndTime) {
         DateAndTime = dateAndTime;
     }
 

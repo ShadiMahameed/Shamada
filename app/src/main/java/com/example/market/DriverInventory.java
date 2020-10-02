@@ -100,6 +100,7 @@ public class DriverInventory extends AppCompatActivity {
                 int i=0;
                 for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
+                    // todo fix i
                     product2=dataSnapshot.getValue(QuanProduct.class);
                     product2.toString();
                    // int oldinv =dataSnapshot.child(products.get(i).getName()).child("quaninty").getValue(Integer.class);
