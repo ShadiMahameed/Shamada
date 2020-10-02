@@ -13,12 +13,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/driver_bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@+id/btnUpdateInv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:visibility="visible" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,5 +31,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/driver_bottom_navigation" />
+
+    <Button
+        android:id="@+id/btnUpdateInv"
+        android:layout_width="233dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="1dp"
+        android:text="Update Inventory"
+        app:layout_constraintBottom_toTopOf="@+id/driver_bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerInventoryDriver" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

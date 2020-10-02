@@ -11,10 +11,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.market.classes.DriverInventoryAdapter;
 import com.example.market.classes.Product;
 import com.example.market.classes.QuanProduct;
+import com.example.market.classes.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,32 +27,56 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DriverInventory extends AppCompatActivity {
 
     FirebaseDatabase database;
-    DatabaseReference myRef;
+    DatabaseReference myRef,myRefinv,myRefinvd;
     DriverInventoryAdapter driverInventoryAdapter;
     RecyclerView recyclerViewinv;
     ArrayList<QuanProduct> products;
     Product product;
+    QuanProduct product2;
+    Button updateinv;
+    Map<String, Object> invnew;
+    User driver;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_inventory);
-
-
-
-
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Product");
+        myRefinv=database.getReference().child("Inventory");
         recyclerViewinv=(RecyclerView) findViewById(R.id.recyclerInventoryDriver);
         recyclerViewinv.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewinv.setHasFixedSize(true);
         products=new ArrayList<>();
+        driver=MainActivity.getUser();
+        invnew = new HashMap<>();
+        myRefinvd=myRefinv.child(driver.getName());
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Product");
+        updateinv=(Button) findViewById(R.id.btnUpdateInv);
+        updateinv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0;i<products.size();i++)
+                {
+                    invnew.put(products.get(i).getName(),products.get(i) );
+                }
+                myRefinv.child(driver.getName()).updateChildren(invnew);
+                Toast.makeText(getApplicationContext(),"Inventory has been updated",Toast.LENGTH_SHORT).show();
+                Intent intent=getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -56,6 +84,27 @@ public class DriverInventory extends AppCompatActivity {
                 {
                     product=dataSnapshot.getValue(Product.class);
                     products.add(new QuanProduct(product,0));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        myRefinvd.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int i=0;
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    product2=dataSnapshot.getValue(QuanProduct.class);
+                    product2.toString();
+                   // int oldinv =dataSnapshot.child(products.get(i).getName()).child("quaninty").getValue(Integer.class);
+                    products.get(i).setQuantity(product2.getQuantity());
+                    i++;
                 }
                 driverInventoryAdapter = new DriverInventoryAdapter(DriverInventory.this,products);
                 recyclerViewinv.setAdapter(driverInventoryAdapter);
@@ -66,7 +115,6 @@ public class DriverInventory extends AppCompatActivity {
 
             }
         });
-
 
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.driver_bottom_navigation);

@@ -62,9 +62,11 @@
             android:id="@+id/txtQttyinv"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="15dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:hint="0"
+            android:inputType="numberDecimal" />
 
 
     </LinearLayout>

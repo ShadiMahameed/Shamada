@@ -2,6 +2,8 @@ package com.example.market.classes;
 
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +37,26 @@ public class DriverInventoryAdapter extends RecyclerView.Adapter<DriverInventory
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InventoryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InventoryViewHolder holder, final int position) {
         holder.pronamein.setText(quanProducts.get(position).getName());
         holder.propricein.setText(quanProducts.get(position).getQuantity()+"");
         Picasso.get().load(quanProducts.get(position).getImageURL()).into(holder.proimagein);
+        holder.addquan.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int newval = Integer.parseInt(s.toString().trim());
+                quanProducts.get(position).setQuantity(newval);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     @Override
@@ -46,7 +64,7 @@ public class DriverInventoryAdapter extends RecyclerView.Adapter<DriverInventory
         return quanProducts.size();
     }
 
-    class InventoryViewHolder extends RecyclerView.ViewHolder
+    public class InventoryViewHolder extends RecyclerView.ViewHolder
     {
         TextView propricein,pronamein;
         ImageView proimagein;
@@ -58,6 +76,7 @@ public class DriverInventoryAdapter extends RecyclerView.Adapter<DriverInventory
             proimagein = (ImageView) itemView.findViewById(R.id.productPhotoinv);
             addquan = (EditText) itemView.findViewById(R.id.txtQttyinv);
         }
+
     }
 
 }

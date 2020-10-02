@@ -9,12 +9,21 @@ public class QuanProduct extends Product implements Parcelable {
     private int quantity=0;
 
 
+    public QuanProduct()
+    {
+
+    }
+    public QuanProduct(QuanProduct qp)
+    {
+        super(qp.getName(), qp.getPrice(), qp.getImageURL());
+        quantity=qp.getQuantity();
+    }
     public QuanProduct(String n, String p, String i) {
         super(n, p, i);
     }
     public QuanProduct(Product p,int quan){
         super(p);
-        quantity=0;
+        quantity=quan;
     }
 //this is for commit
 
