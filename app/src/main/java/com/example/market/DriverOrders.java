@@ -3,6 +3,8 @@ package com.example.market;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +14,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DriverOrders extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_orders);
+
+
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.driver_bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home_driver);

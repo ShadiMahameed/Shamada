@@ -59,6 +59,30 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_navigation);
 
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.driver_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_map);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_inventory:
+                        startActivity(new Intent(getApplicationContext(), DriverInventory.class));
+                        overridePendingTransition(0, 0);
+                        break;
+                    case R.id.nav_home_driver:
+                        startActivity(new Intent(getApplicationContext(), DriverOrders.class));
+                        overridePendingTransition(0, 0);
+                        break;
+                    case R.id.nav_map:
+                        break;
+                }
+
+                return false;
+            }
+        });
+
         searchView = findViewById(R.id.sv_location);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
 
@@ -176,27 +200,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
 
         mapFragment.getMapAsync(this);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.driver_bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_map);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_inventory:
-                        startActivity(new Intent(getApplicationContext(), DriverInventory.class));
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.nav_home_driver:
-                        startActivity(new Intent(getApplicationContext(), DriverOrders.class));
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.nav_map:
-                        break;
-                }
 
-                return false;
-            }
-        });
         return;
     }
 
