@@ -3,9 +3,9 @@ package com.example.market.classes;
 import android.net.Uri;
 
 public class Product {
-    private String name;
-    private String price;
-    private String imageURL;
+    protected String name;
+    protected String price;
+    protected String imageURL;
 
 
     public Product(String n,String p,String i){

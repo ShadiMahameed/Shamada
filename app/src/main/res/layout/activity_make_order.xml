@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MakeOrder">
+
+    <TextView
+        android:id="@+id/UserID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/Location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Insert Location"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/UserID"
+        app:layout_constraintStart_toStartOf="@+id/UserID"
+        app:layout_constraintTop_toBottomOf="@+id/UserID" />
+
+    <EditText
+        android:id="@+id/PhoneNum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Insert phone number"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/Location"
+        app:layout_constraintStart_toStartOf="@+id/Location"
+        app:layout_constraintTop_toBottomOf="@+id/Location" />
+
+    <TextView
+        android:id="@+id/Price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/PhoneNum"
+        app:layout_constraintStart_toStartOf="@+id/PhoneNum"
+        app:layout_constraintTop_toBottomOf="@+id/PhoneNum" />
+
+    <TextView
+        android:id="@+id/YouWantToPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="How do you want to pay?"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/Price"
+        app:layout_constraintStart_toStartOf="@+id/Price"
+        app:layout_constraintTop_toBottomOf="@+id/Price" />
+
+    <Button
+        android:id="@+id/PayCash"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
+        android:text="Cash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/YouWantToPay" />
+
+    <Button
+        android:id="@+id/payCredit"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:text="Credit Card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/YouWantToPay" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

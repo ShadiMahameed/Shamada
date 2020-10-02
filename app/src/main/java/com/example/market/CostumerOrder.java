@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +38,8 @@ public class CostumerOrder extends AppCompatActivity {
     CostumerOrderAdapter adapter;
     Product product;
     ImageButton btnClear,btnGotoCart;
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,12 @@ public class CostumerOrder extends AppCompatActivity {
         btnGotoCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Move To Payment",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(CostumerOrder.this,MakeOrder.class);
+                Bundle b = new Bundle();
+                b.putParcelableArrayList("products", ( products));
+                intent.putExtras(b);
+                Toast.makeText(getApplicationContext(),"Moved To Payment",Toast.LENGTH_LONG).show();
+                startActivity(intent);
             }
         });
         btnClear.setOnClickListener(new View.OnClickListener() {

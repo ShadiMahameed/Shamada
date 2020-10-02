@@ -1,7 +1,10 @@
 package com.example.market.classes;
 
 
-public class QuanProduct extends Product {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class QuanProduct extends Product implements Parcelable {
 
     private int quantity=0;
 
@@ -15,6 +18,15 @@ public class QuanProduct extends Product {
     }
 //this is for commit
 
+    protected QuanProduct(Parcel in) {
+        quantity = in.readInt();
+        name = in.readString();
+        price = in.readString();
+        imageURL = in.readString();
+    }
+
+
+
     public int getQuantity() {
         return quantity;
     }
@@ -24,4 +36,29 @@ public class QuanProduct extends Product {
     }
 
 
+    public static final Creator<QuanProduct> CREATOR = new Creator<QuanProduct>() {
+        @Override
+        public QuanProduct createFromParcel(Parcel in) {
+            return new QuanProduct(in);
+        }
+
+        @Override
+        public QuanProduct[] newArray(int size) {
+            return new QuanProduct[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(quantity);
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(imageURL);
+
+    }
 }
