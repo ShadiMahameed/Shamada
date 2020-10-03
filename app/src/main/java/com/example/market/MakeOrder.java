@@ -1,5 +1,6 @@
 package com.example.market;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,8 +18,11 @@ import com.example.market.classes.Order;
 import com.example.market.classes.Product;
 import com.example.market.classes.QuanProduct;
 import com.example.market.classes.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
@@ -143,14 +147,38 @@ public class MakeOrder extends AppCompatActivity {
         String location_ = location.getText().toString().trim();
         String name_ = userN.getText().toString().trim();
         LocalDateTime now = LocalDateTime.now();
-        Order order = new Order( products, location_, now, name_);
+        final Order order = new Order( products, location_, now, name_);
         String json = new Gson().toJson(order);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("UnTakenOrders");
 
         Random r =new Random();
-        myRef.child(r.nextDouble()+"").setValue(json);
+        int d= r.nextInt();
+        myRef.child(d+"").setValue(json);
 
+
+        final ArrayList<Order> orders = new ArrayList<Order>();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                products.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    String o = dataSnapshot.getValue(String.class);
+
+                    orders.add(new Gson().fromJson(o,Order.class));
+                }
+                System.out.println(orders.get(0).getCostumerName());
+                System.out.println(orders.get(0).getLocation());
+                System.out.println(orders.get(0).getPrice());
+                System.out.println(orders.get(0).getProducts().get(0).getQuantity());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
