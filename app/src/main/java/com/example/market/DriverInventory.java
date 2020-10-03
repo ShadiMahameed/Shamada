@@ -36,7 +36,7 @@ public class DriverInventory extends AppCompatActivity {
     DatabaseReference myRef,myRefinv,myRefinvd;
     DriverInventoryAdapter driverInventoryAdapter;
     RecyclerView recyclerViewinv;
-    ArrayList<QuanProduct> products;
+    ArrayList<QuanProduct> products,products2;
     Product product;
     QuanProduct product2;
     Button updateinv;
@@ -56,6 +56,7 @@ public class DriverInventory extends AppCompatActivity {
         recyclerViewinv.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewinv.setHasFixedSize(true);
         products=new ArrayList<>();
+        products2=new ArrayList<>();
         driver=MainActivity.getUser();
         invnew = new HashMap<>();
         myRefinvd=myRefinv.child(driver.getName());
@@ -98,25 +99,33 @@ public class DriverInventory extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int i=0;
-                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     // todo fix i
-                    product2=dataSnapshot.getValue(QuanProduct.class);
-                    product2.toString();
-                   // int oldinv =dataSnapshot.child(products.get(i).getName()).child("quaninty").getValue(Integer.class);
-                    products.get(i).setQuantity(product2.getQuantity());
-                    i++;
+                    product2 = dataSnapshot.getValue(QuanProduct.class);
+                    // products2.add(product2);
+                    if (products.contains(product2)) {
+                        if (products.get(i).getName().equals(product2.getName())) {
+                            products.get(i).setQuantity(product2.getQuantity());
+                            i++;
+                        } else {
+                            i++;
+                            products.get(i).setQuantity(product2.getQuantity());
+                        }
+                    }
                 }
+
+
                 driverInventoryAdapter = new DriverInventoryAdapter(DriverInventory.this,products);
                 recyclerViewinv.setAdapter(driverInventoryAdapter);
-            }
 
+
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
+     //   int j=0;
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.driver_bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_inventory);
