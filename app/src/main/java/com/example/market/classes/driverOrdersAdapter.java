@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.market.R;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -38,7 +39,13 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
         holder.name.setText(orders.get(position).getCostumerName());
         holder.location.setText(orders.get(position).getLocation());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm a z");
-        holder.time.setText(formatter.format(orders.get(position).getDateAndTime()));
+//
+//        LocalDateTime f=orders.get(position).getDateAndTime();
+//        String time="";
+//        if(f != null)
+//            time = formatter.format(f);
+//        if(!time.isEmpty() && time!=null)
+//            holder.time.setText(time);
         holder.takeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +61,7 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
 
     @Override
     public int getItemCount() {
-        return 0;
+        return orders.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
