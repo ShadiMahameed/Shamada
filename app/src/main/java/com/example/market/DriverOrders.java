@@ -10,15 +10,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.market.classes.Order;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class DriverOrders extends AppCompatActivity {
+
+    ArrayList<Order> orders = new ArrayList<Order>();
+    FirebaseDatabase database;
+    DatabaseReference inventory,UntakenOrders;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_orders);
+
+        {
+            //todo check if there is a taken order
+        }
+
+
+
+        database = FirebaseDatabase.getInstance();
+        inventory = database.getReference().child("Inventory");
+        UntakenOrders=database.getReference().child("UnTakenOrders");
+
+
 
 
 
