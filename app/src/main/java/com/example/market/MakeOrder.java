@@ -17,10 +17,14 @@ import com.example.market.classes.Order;
 import com.example.market.classes.Product;
 import com.example.market.classes.QuanProduct;
 import com.example.market.classes.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class MakeOrder extends AppCompatActivity {
@@ -138,11 +142,16 @@ public class MakeOrder extends AppCompatActivity {
     void InsertOrderToDB(){
         String location_ = location.getText().toString().trim();
         String name_ = userN.getText().toString().trim();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Order order = new Order( products, location_, now, name_);
+        String json = new Gson().toJson(order);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("UnTakenOrders");
 
-        // todo order lal data beeez
+        Random r =new Random();
+        myRef.child(r.nextDouble()+"").setValue(json);
+
+
 
 
     }
