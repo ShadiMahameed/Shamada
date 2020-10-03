@@ -146,13 +146,11 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                         return;
                     }
 
-                    if(!Pattern.compile("[0-9]*").matcher(phone).matches())
-                    {
+                    if(!Pattern.compile("[0][5][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]").matcher(phone).matches()){
                         txtphone.setError("Invalid Phone Number");
                         txtphone.requestFocus();
                         return;
                     }
-
 
                     mAuth.createUserWithEmailAndPassword(Email,Pass1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override

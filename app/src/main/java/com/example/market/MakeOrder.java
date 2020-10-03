@@ -102,11 +102,21 @@ public class MakeOrder extends AppCompatActivity {
         FinalPrice.setText("Final price: "+f+"ILS");
     }
 
-    public void ShowPopup(View v)
+    public void ShowPopup(final View v)
     {
-        String txtid , txtccnum , txtmonth , txtyear , txtcvv;
-        //txtid=findViewById(R.id.txtccID).get
-        Button cancel,pay;
+        final EditText vid,vccnum,vmonth,vyear,vcvv;
+        vid=findViewById(R.id.txtccID);
+        vccnum=findViewById(R.id.txtccNumber);
+        vmonth=findViewById(R.id.txtccmonth);
+        vyear=findViewById(R.id.txtccyear);
+        vcvv=findViewById(R.id.txtCCcvv);
+        final String txtid , txtccnum , txtmonth , txtyear , txtcvv;
+        txtid=vid.getText().toString().trim();
+        txtccnum=vccnum.getText().toString().trim();
+        txtmonth=vmonth.getText().toString().trim();
+        txtyear=vyear.getText().toString().trim();
+        txtcvv=vcvv.getText().toString().trim();
+        final Button cancel,pay;
         ccdialog.setContentView(R.layout.credit_card_dialog);
         pay=(Button) ccdialog.findViewById(R.id.btnccpay);
         cancel=(Button) ccdialog.findViewById(R.id.btnccCancel);
@@ -114,9 +124,98 @@ public class MakeOrder extends AppCompatActivity {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(txtid.isEmpty())
+                {
+                    vid.setError("ID Number is required");
+                    vid.requestFocus();
+                    return;
+                }
+                if(!Pattern.compile("[0-9]*").matcher(txtid).matches())
+                {
+                    vid.setError("ID Number is invalid");
+                    vid.requestFocus();
+                    return;
+                }
+                if(txtid.length()!=9)
+                {
+                    vid.setError("ID Number is invalid");
+                    vid.requestFocus();
+                    return;
+                }
+                if(txtccnum.isEmpty())
+                {
+                    vccnum.setError("CreditCard Number is required");
+                    vccnum.requestFocus();
+                    return;
+                }
+                if(txtccnum.length()!=16)
+                {
+                    vccnum.setError("CreditCard Number is invalid");
+                    vccnum.requestFocus();
+                    return;
+                }
+                if(!Pattern.compile("[0-9]*").matcher(txtccnum).matches())
+                {
+                    vccnum.setError("CreditCard Number is invalid");
+                    vccnum.requestFocus();
+                    return;
+                }
+                if(txtyear.isEmpty())
+                {
+                    vyear.setError("Expiration Year is required");
+                    vyear.requestFocus();
+                    return;
+                }
+                if(txtyear.length()!=4)
+                {
+                    vyear.setError("Expiration Year is invalid");
+                    vyear.requestFocus();
+                    return;
+                }
+                if(!Pattern.compile("[0-9]*").matcher(txtyear).matches())
+                {
+                    vyear.setError("Expiration Year is invalid");
+                    vyear.requestFocus();
+                    return;
+                }
+                if(txtmonth.isEmpty())
+                {
+                    vmonth.setError("Expiration Month is required");
+                    vmonth.requestFocus();
+                    return;
+                }
+                if(txtmonth.length()!=2)
+                {
+                    vmonth.setError("Expiration Month is invalid");
+                    vmonth.requestFocus();
+                    return;
+                }
+                if(!Pattern.compile("[0-9]*").matcher(txtmonth).matches())
+                {
+                    vmonth.setError("Expiration Month is invalid");
+                    vmonth.requestFocus();
+                    return;
+                }
+                if(txtcvv.isEmpty())
+                {
+                    vcvv.setError("CVV is required");
+                    vcvv.requestFocus();
+                    return;
+                }
+                if(txtcvv.length()!=3)
+                {
+                    vcvv.setError("CVV is invalid");
+                    vcvv.requestFocus();
+                    return;
+                }
+                if(!Pattern.compile("[0-9]*").matcher(txtcvv).matches())
+                {
+                    vcvv.setError("CVV is invalid");
+                    vcvv.requestFocus();
+                    return;
+                }
                 InsertOrderToDB();
-                Toast.makeText(getApplicationContext(),"Your order on the way",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Your order is on the way",Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(),CostumerOrder.class));
                 ccdialog.dismiss();
             }
