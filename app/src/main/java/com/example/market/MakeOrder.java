@@ -33,6 +33,9 @@ public class MakeOrder extends AppCompatActivity {
 
     ArrayList<QuanProduct> products;
 
+    String txtid , txtccnum , txtmonth , txtyear , txtcvv;
+    EditText vid,vccnum,vmonth,vyear,vcvv;
+
     TextView userN, FinalPrice;
     EditText location, phone;
     Button payCash, payCC, returnbtn;
@@ -104,26 +107,26 @@ public class MakeOrder extends AppCompatActivity {
 
     public void ShowPopup(final View v)
     {
-        final EditText vid,vccnum,vmonth,vyear,vcvv;
-        vid=findViewById(R.id.txtccID);
-        vccnum=findViewById(R.id.txtccNumber);
-        vmonth=findViewById(R.id.txtccmonth);
-        vyear=findViewById(R.id.txtccyear);
-        vcvv=findViewById(R.id.txtCCcvv);
-        final String txtid , txtccnum , txtmonth , txtyear , txtcvv;
-        txtid=vid.getText().toString().trim();
-        txtccnum=vccnum.getText().toString().trim();
-        txtmonth=vmonth.getText().toString().trim();
-        txtyear=vyear.getText().toString().trim();
-        txtcvv=vcvv.getText().toString().trim();
-        final Button cancel,pay;
         ccdialog.setContentView(R.layout.credit_card_dialog);
+        vid=(EditText) ccdialog.findViewById(R.id.txtccID);
+        vccnum=(EditText) ccdialog.findViewById(R.id.txtccNumber);
+        vmonth=(EditText) ccdialog.findViewById(R.id.txtccmonth);
+        vyear=(EditText) ccdialog.findViewById(R.id.txtccyear);
+        vcvv=(EditText) ccdialog.findViewById(R.id.txtCCcvv);
+
+        final Button cancel,pay;
         pay=(Button) ccdialog.findViewById(R.id.btnccpay);
         cancel=(Button) ccdialog.findViewById(R.id.btnccCancel);
         ccdialog.show();
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                txtid=vid.getText().toString().trim();
+                txtccnum=vccnum.getText().toString().trim();
+                txtmonth=vmonth.getText().toString().trim();
+                txtyear=vyear.getText().toString().trim();
+                txtcvv=vcvv.getText().toString().trim();
                 if(txtid.isEmpty())
                 {
                     vid.setError("ID Number is required");

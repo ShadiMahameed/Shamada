@@ -29,6 +29,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/background"/>
 
+
+    <Button
+        android:id="@+id/btnDelivered"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
+        android:text="Send Delivery SMS"
+        app:layout_constraintBottom_toTopOf="@id/driver_bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/driver_bottom_navigation"
         android:layout_width="match_parent"
