@@ -55,7 +55,7 @@ public class CostumerOrderAdapter extends RecyclerView.Adapter<CostumerOrderAdap
                     Toast.makeText(v.getContext(), "Quantity Should be Integer", Toast.LENGTH_LONG).show();
 
                 }
-//this is for commit
+
             }
         });
 
@@ -66,6 +66,8 @@ public class CostumerOrderAdapter extends RecyclerView.Adapter<CostumerOrderAdap
     public int getItemCount() {
         return products.size();
     }
+
+
 
     class MyViewHolder extends RecyclerView.ViewHolder
     {

@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.market.classes.Order;
-import com.example.market.classes.Product;
 import com.example.market.classes.QuanProduct;
 import com.example.market.classes.User;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -38,6 +36,7 @@ public class MakeOrder extends AppCompatActivity {
     TextView userN, FinalPrice;
     EditText location, phone;
     Button payCash, payCC, returnbtn;
+    Dialog ccdialog;
 
 
 
@@ -55,6 +54,8 @@ public class MakeOrder extends AppCompatActivity {
         });
 
 
+
+        ccdialog= new Dialog(this);
         Bundle b = new Bundle(this.getIntent().getExtras());
         products = b.getParcelableArrayList("products");
 
@@ -72,22 +73,9 @@ public class MakeOrder extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                     return;
                 }
-
-                /**
-                 *
-                 * pop up
-                 * pop up
-                 *
-                 */
-                //todo pop up
-
-
-                InsertOrderToDB();
-                Toast.makeText(getApplicationContext(),"Your order on the way",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(),CostumerOrder.class));
+                ShowPopup(findViewById(R.id.PayCredit));
             }
         });
-
 
         findViewById(R.id.PayCash).setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -103,10 +91,6 @@ public class MakeOrder extends AppCompatActivity {
             }
         });
 
-
-
-
-
         User user = new User(MainActivity.getUser());
 
         float f = 0;
@@ -116,13 +100,34 @@ public class MakeOrder extends AppCompatActivity {
 
         userN.setText(user.getName());
         FinalPrice.setText("Final price: "+f+"ILS");
-
-
-
-
     }
 
+    public void ShowPopup(View v)
+    {
+        String txtid , txtccnum , txtmonth , txtyear , txtcvv;
+        //txtid=findViewById(R.id.txtccID).get
+        Button cancel,pay;
+        ccdialog.setContentView(R.layout.credit_card_dialog);
+        pay=(Button) ccdialog.findViewById(R.id.btnccpay);
+        cancel=(Button) ccdialog.findViewById(R.id.btnccCancel);
+        ccdialog.show();
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                InsertOrderToDB();
+                Toast.makeText(getApplicationContext(),"Your order on the way",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(),CostumerOrder.class));
+                ccdialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ccdialog.dismiss();
+            }
+        });
+    }
     boolean checkData(){
         String l = location.getText().toString().trim();
         String p = phone.getText().toString().trim();
@@ -137,13 +142,9 @@ public class MakeOrder extends AppCompatActivity {
             return true;
         }
         return false;
-
     }
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
-    void InsertOrderToDB(){
+     void InsertOrderToDB(){
         String location_ = location.getText().toString().trim();
         String name_ = userN.getText().toString().trim();
         LocalDateTime now = LocalDateTime.now();
@@ -151,14 +152,10 @@ public class MakeOrder extends AppCompatActivity {
         String json = new Gson().toJson(order);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("UnTakenOrders");
-
         Random r =new Random();
         int d= r.nextInt();
         myRef.child(d+"").setValue(json);
-
-
         final ArrayList<Order> orders = new ArrayList<Order>();
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -166,7 +163,6 @@ public class MakeOrder extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
                     String o = dataSnapshot.getValue(String.class);
-
                     orders.add(new Gson().fromJson(o,Order.class));
                 }
                 System.out.println(orders.get(0).getCostumerName());
@@ -176,13 +172,7 @@ public class MakeOrder extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-
-
     }
-
-
 }

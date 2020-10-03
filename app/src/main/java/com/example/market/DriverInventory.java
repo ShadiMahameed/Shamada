@@ -100,7 +100,6 @@ public class DriverInventory extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int i=0;
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    // todo fix i
                     product2 = dataSnapshot.getValue(QuanProduct.class);
                     // products2.add(product2);
                     if (products.contains(product2)) {
