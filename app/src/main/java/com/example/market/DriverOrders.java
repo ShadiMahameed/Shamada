@@ -29,16 +29,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DriverOrders extends AppCompatActivity {
 
     ArrayList<Order> orders = new ArrayList<Order>();
+    List<QuanProduct> quantproducts=new ArrayList<QuanProduct>();
     FirebaseDatabase database;
     DatabaseReference inventory,UntakenOrders;
     User driver;
     ArrayList<QuanProduct> products = new ArrayList<QuanProduct>();
     Inventory inv;
     RecyclerView recyclerView;
+    int index=0;
 
 
 
@@ -62,7 +65,6 @@ public class DriverOrders extends AppCompatActivity {
         inventory = database.getReference().child("Inventory").child(driver.getName());
         UntakenOrders=database.getReference().child("UnTakenOrders");
 
-
         inventory.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -84,49 +86,33 @@ public class DriverOrders extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Order o = new Gson().fromJson(dataSnapshot.getValue(String.class),Order.class);
+                    quantproducts=o.getProducts();
                     boolean flag=true;
-                    for( int i=0;i<o.getProducts().size();i++){
-                        QuanProduct prod = o.getProducts().get(i);
-                        boolean exist =false;
-                        for(int j=0;j<inv.getProducts().size();j++){
-                            QuanProduct invprod = o.getProducts().get(j);
-                            if(prod.getName() == invprod.getName()){
-                                if(prod.getQuantity() <= invprod.getQuantity()){
-                                    exist=true;
-                                }
-                            }
-
-                        }
-                        if(!exist)
-                            flag=false;
-
+                    for(int i=0;i<quantproducts.size();i++)
+                    {
+                        if(inv.getProducts().contains(quantproducts.get(i)))
+                            index=inv.getProducts().indexOf(quantproducts.get(i));
+                       if(quantproducts.get(i).getQuantity()>inv.getProducts().get(index).getQuantity())
+                       {
+                           flag=false;
+                       }
                     }
-                    if(flag){
+                    if(flag==true)
+                    {
                         orders.add(o);
-                        System.out.println("order should appear");
                     }
+
                }
 
                 recyclerView.setAdapter(new driverOrdersAdapter(orders,getApplicationContext()));
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
-
-
-
-
-
-
-
         BottomNavigationView bottomNavigationView=findViewById(R.id.driver_bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home_driver);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
