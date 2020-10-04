@@ -1,5 +1,7 @@
 package com.example.market.classes;
 
+import android.content.pm.PackageManager;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,27 +14,30 @@ public class Order {
     private LocalDateTime DateAndTime;
     private String CostumerName;
     private String Status;
+    private String PaymentMethod;
 //ready new
     public Order() {
     }
 
-    public Order(ArrayList<QuanProduct> products, String location, LocalDateTime dateAndTime, String costumerName) {
+    public Order(List<QuanProduct> products, String location, String price, LocalDateTime dateAndTime, String costumerName,String paymentMethod) {
+        Products = products;
+        Location = location;
+        Price = price;
+        DateAndTime = dateAndTime;
+        CostumerName = costumerName;
+        Status ="Pending";
+        PaymentMethod=paymentMethod;
+    }
+
+   /* public Order(ArrayList<QuanProduct> products, String location, LocalDateTime dateAndTime, String costumerName) {
         this.Products = products;
         Location = location;
         DateAndTime = dateAndTime;
         CostumerName = costumerName;
         Status = "Pending";
         Price = gettotalprice();
-    }
+    }*/
 
-    private String gettotalprice() {
-        float totalprice = 0;
-        String empty="";
-        for (int i = 0; i < Products.size(); i++) {
-            totalprice += Float.parseFloat(Products.get(i).getPrice());
-        }
-        return totalprice+empty;
-    }
 
     public List<QuanProduct> getProducts() {
         return Products;

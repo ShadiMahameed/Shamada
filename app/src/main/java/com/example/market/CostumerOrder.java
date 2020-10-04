@@ -56,7 +56,7 @@ public class CostumerOrder extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CostumerOrder.this,MakeOrder.class);
                 Bundle b = new Bundle();
-                b.putParcelableArrayList("products", ( products));
+                b.putParcelableArrayList("products", (products));
                 intent.putExtras(b);
                 Toast.makeText(getApplicationContext(),"Moved To Payment",Toast.LENGTH_LONG).show();
                 startActivity(intent);

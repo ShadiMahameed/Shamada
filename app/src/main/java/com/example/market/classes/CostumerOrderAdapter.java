@@ -41,7 +41,7 @@ public class CostumerOrderAdapter extends RecyclerView.Adapter<CostumerOrderAdap
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.name.setText(products.get(position).getName());
         holder.price.setText(products.get(position).getPrice());
-        holder.quantity.setText(products.get(position).getQuantity()+"");
+        holder.quantity.setHint(products.get(position).getQuantity()+"");
         Picasso.get().load(products.get(position).getImageURL()).into(holder.photo);
 
         holder.changeQuan.setOnClickListener(new View.OnClickListener() {

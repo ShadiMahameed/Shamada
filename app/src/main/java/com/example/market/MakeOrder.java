@@ -33,7 +33,8 @@ public class MakeOrder extends AppCompatActivity {
 
     ArrayList<QuanProduct> products;
 
-    String txtid , txtccnum , txtmonth , txtyear , txtcvv;
+    float f;
+    String txtid , txtccnum , txtmonth , txtyear , txtcvv,payementmethod;
     EditText vid,vccnum,vmonth,vyear,vcvv;
 
     TextView userN, FinalPrice;
@@ -76,6 +77,7 @@ public class MakeOrder extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                     return;
                 }
+                payementmethod="CreditCard";
                 ShowPopup(findViewById(R.id.PayCredit));
             }
         });
@@ -88,6 +90,7 @@ public class MakeOrder extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                     return;
                 }
+                payementmethod="cash";
                 InsertOrderToDB();
                 Toast.makeText(getApplicationContext(),"Your order on the way",Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(),CostumerOrder.class));
@@ -96,11 +99,15 @@ public class MakeOrder extends AppCompatActivity {
 
         User user = new User(MainActivity.getUser());
 
-        float f = 0;
+        f = 0;
         for (int i = 0; i < products.size(); i++){
-            f += (Float.parseFloat(products.get(i).getPrice())*products.get(i).getQuantity());
+            if(products.get(i).getQuantity()==0) {
+                products.remove(products.get(i));
+                i--;
+            }
+            else
+            f += (Float.parseFloat(products.get(i).getPrice()))*(products.get(i).getQuantity());
         }
-
         userN.setText(user.getName());
         FinalPrice.setText("Final price: "+f+"ILS");
     }
@@ -250,7 +257,7 @@ public class MakeOrder extends AppCompatActivity {
         String location_ = location.getText().toString().trim();
         String name_ = userN.getText().toString().trim();
         LocalDateTime now = LocalDateTime.now();
-        final Order order = new Order( products, location_, now, name_);
+        final Order order = new Order(products, location_,f+"", now, name_,payementmethod);
         String json = new Gson().toJson(order);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("UnTakenOrders");
