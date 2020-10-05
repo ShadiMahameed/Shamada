@@ -10,8 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.IntentCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.market.DriverNavigation;
 import com.example.market.DriverOrders;
 import com.example.market.MainActivity;
 import com.example.market.R;
@@ -94,8 +96,9 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
 
 
 
-    void move(){
-        context.startActivity(new Intent(context,DriverOrders.class));
+    void move() {
+        Intent i = new Intent(context, DriverNavigation.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
-
 }

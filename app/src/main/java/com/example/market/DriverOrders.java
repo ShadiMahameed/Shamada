@@ -64,7 +64,7 @@ public class DriverOrders extends AppCompatActivity {
         driver=MainActivity.getUser();
         database = FirebaseDatabase.getInstance();
         inventory = database.getReference().child("Inventory").child(driver.getName());
-        TakenOrders = database.getReference().child("takenOrders");
+        TakenOrders = database.getReference().child("TakenOrders");
         UntakenOrders=database.getReference().child("UnTakenOrders");
 
 
@@ -72,13 +72,14 @@ public class DriverOrders extends AppCompatActivity {
         getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Toast.makeText(getApplicationContext(),"Deliver order first",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
+                if(snapshot.exists())
+                {
+                    Toast.makeText(getApplicationContext(),"Deliver order first",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 

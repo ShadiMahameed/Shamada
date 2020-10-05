@@ -49,8 +49,12 @@ public class taken_order extends AppCompatActivity {
         getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String s = snapshot.getValue(String.class);
-                order = new Gson().fromJson(s,Order.class);
+                if(snapshot.exists()) {
+                    String s = snapshot.getValue(String.class);
+                    order = new Gson().fromJson(s, Order.class);
+                }else{
+                    startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
+                }
             }
 
             @Override
@@ -60,9 +64,9 @@ public class taken_order extends AppCompatActivity {
             }
         });
 
+
         name.setText(order.getCostumerName());
         location.setText(order.getLocation());
-        //time.setText(order.getDateAndTime());
         price.setText(order.getPrice());
         pay_method.setText(order.getPaymentMethod());
 
@@ -78,6 +82,11 @@ public class taken_order extends AppCompatActivity {
         order_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();;
+                DatabaseReference inventory = database.getReference().child("Inventory");
+
+                //todo get inventory and remove delivered products
+
                 TakenOrdersDB.child(MainActivity.getUser().getName()).removeValue();
                 String json = new Gson().toJson(order);
                 deliveredOrdersDB.child(order.getCostumerName()).child(R.nextInt()+"").setValue(json);
