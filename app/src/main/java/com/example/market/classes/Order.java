@@ -14,6 +14,15 @@ public class Order {
     private LocalDateTime DateAndTime;
     private String CostumerName;
     private String Status;
+
+    public String getPaymentMethod() {
+        return PaymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        PaymentMethod = paymentMethod;
+    }
+
     private String PaymentMethod;
 //ready new
     public Order() {
