@@ -21,4 +21,6 @@
         AIzaSyCUgY5FNSqw-rgFqMf0b6pABps0AuSEGOg
     </string>
     <string name="quantity">Quantity</string>
+    <string name="send_delivery_sms">Send Delivery SMS</string>
+    <string name="view_order">View Order</string>
 </resources>

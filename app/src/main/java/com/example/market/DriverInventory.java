@@ -94,8 +94,6 @@ public class DriverInventory extends AppCompatActivity {
             }
         });
 
-     //   int j=0;
-
         BottomNavigationView bottomNavigationView=findViewById(R.id.driver_bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_inventory);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

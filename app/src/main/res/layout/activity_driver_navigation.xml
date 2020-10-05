@@ -34,7 +34,7 @@
         android:id="@+id/btnDelivered"
         android:layout_width="164dp"
         android:layout_height="wrap_content"
-        android:text="Send Delivery SMS"
+        android:text="@string/view_order"
         app:layout_constraintBottom_toTopOf="@id/driver_bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
