@@ -63,10 +63,10 @@ public class DriverOrders extends AppCompatActivity {
 
         driver=MainActivity.getUser();
         database = FirebaseDatabase.getInstance();
-        inventory = database.getReference().child("Inventory").child(driver.getName());
         TakenOrders = database.getReference().child("TakenOrders");
         UntakenOrders=database.getReference().child("UnTakenOrders");
 
+        inventory = database.getReference().child("Inventory").child(MainActivity.getUser().getName());
 
         Query getOrder = TakenOrders.child(MainActivity.getUser().getName());
         getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -75,55 +75,58 @@ public class DriverOrders extends AppCompatActivity {
                 if(snapshot.exists())
                 {
                     Toast.makeText(getApplicationContext(),"Deliver order first",Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+                else
+                {
+
+                    inventory.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            products.clear();
+                            QuanProduct p;
+                            for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                p = dataSnapshot.getValue(QuanProduct.class);
+                                products.add(p);
+                            }
+                            inv = new Inventory(products,driver.getName());
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+                    UntakenOrders.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                Order o = new Gson().fromJson(dataSnapshot.getValue(String.class),Order.class);
+                                quantproducts=o.getProducts();
+                                boolean flag=true;
+                                for(int i=0;i<quantproducts.size();i++)
+                                {
+                                    if(inv.getProducts().contains(quantproducts.get(i)))
+                                        index=inv.getProducts().indexOf(quantproducts.get(i));
+                                    if(Integer.parseInt(quantproducts.get(i).getQuantity())>Integer.parseInt(inv.getProducts().get(index).getQuantity()))
+                                    {
+                                        flag=false;
+                                    }
+                                }
+                                if(flag==true)
+                                {
+                                    orders.add(o);
+                                    nameInDB.add(dataSnapshot.getKey());
+                                }
+                            }
+
+                            recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
 
 
-        inventory.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                products.clear();
-                QuanProduct p;
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    p = dataSnapshot.getValue(QuanProduct.class);
-                    products.add(p);
                 }
-                inv = new Inventory(products,driver.getName());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        UntakenOrders.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Order o = new Gson().fromJson(dataSnapshot.getValue(String.class),Order.class);
-                    quantproducts=o.getProducts();
-                    boolean flag=true;
-                    for(int i=0;i<quantproducts.size();i++)
-                    {
-                        if(inv.getProducts().contains(quantproducts.get(i)))
-                            index=inv.getProducts().indexOf(quantproducts.get(i));
-                       if(Integer.parseInt(quantproducts.get(i).getQuantity())>Integer.parseInt(inv.getProducts().get(index).getQuantity()))
-                       {
-                           flag=false;
-                       }
-                    }
-                    if(flag==true)
-                    {
-                        orders.add(o);
-                        nameInDB.add(dataSnapshot.getKey());
-                    }
-               }
-
-                recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -17,14 +17,13 @@ import java.util.ArrayList;
 
 public class DriverTakenOrderAdapter extends RecyclerView.Adapter<DriverTakenOrderAdapter.TakenOrderViewHolder> {
 
+    Context context;
     ArrayList<QuanProduct> products;
 
     public DriverTakenOrderAdapter(ArrayList<QuanProduct> products, Context context) {
         this.products = products;
         this.context = context;
     }
-
-    Context context;
 
     @NonNull
     @Override

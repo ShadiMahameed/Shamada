@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.market.classes.Order;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,6 +40,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.URI;
@@ -46,6 +55,8 @@ import java.util.Locale;
 
 public class DriverNavigation extends FragmentActivity implements OnMapReadyCallback {
 
+    FirebaseDatabase database;
+    DatabaseReference TakenOrdersDB;
     String currentLocation;
     GoogleMap googleMaps;
     SupportMapFragment mapFragment;
@@ -65,7 +76,22 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
         btnvieworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), taken_order.class));
+                database = FirebaseDatabase.getInstance();
+                TakenOrdersDB = database.getReference().child("TakenOrders");
+                Query getOrder = TakenOrdersDB.child(MainActivity.getUser().getName());
+                getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()) {
+                            startActivity(new Intent(getApplicationContext(), taken_order.class));
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(),"You Haven't yet selected an order",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),DriverOrders.class));
+                    }
+                });
             }
         });
         searchView = findViewById(R.id.sv_location);

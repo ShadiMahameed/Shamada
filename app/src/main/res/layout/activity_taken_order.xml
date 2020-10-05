@@ -16,7 +16,8 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/abc_vector_test" />
+        app:srcCompat="@drawable/abc_vector_test"
+        android:layout_marginLeft="15dp" />
 
     <TextView
         android:id="@+id/costumer_name"
@@ -79,6 +80,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/takenordersrecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
@@ -96,6 +98,7 @@
         android:layout_marginEnd="15dp"
         android:text="Mark as done"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="15dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
