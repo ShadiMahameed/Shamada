@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DriverInventory extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class DriverInventory extends AppCompatActivity {
     DatabaseReference myRef,myRefinv,myRefinvd;
     DriverInventoryAdapter driverInventoryAdapter;
     RecyclerView recyclerViewinv;
-    ArrayList<QuanProduct> products,products2;
+    ArrayList<QuanProduct> products=new ArrayList<QuanProduct>();
     Product product;
     QuanProduct product2;
     Button updateinv;
@@ -54,9 +55,6 @@ public class DriverInventory extends AppCompatActivity {
         myRefinv=database.getReference().child("Inventory");
         recyclerViewinv=(RecyclerView) findViewById(R.id.recyclerInventoryDriver);
         recyclerViewinv.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewinv.setHasFixedSize(true);
-        products=new ArrayList<>();
-        products2=new ArrayList<>();
         driver=MainActivity.getUser();
         invnew = new HashMap<>();
         myRefinvd=myRefinv.child(driver.getName());
@@ -84,8 +82,10 @@ public class DriverInventory extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
                     product=dataSnapshot.getValue(Product.class);
-                    products.add(new QuanProduct(product,0));
+                    products.add(new QuanProduct(product,"0"));
+
                 }
+                getDriverinv();
             }
 
             @Override
@@ -94,36 +94,6 @@ public class DriverInventory extends AppCompatActivity {
             }
         });
 
-
-        myRefinvd.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int i=0;
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    product2 = dataSnapshot.getValue(QuanProduct.class);
-                    // products2.add(product2);
-                    if (products.contains(product2)) {
-                        if (products.get(i).getName().equals(product2.getName())) {
-                            products.get(i).setQuantity(product2.getQuantity());
-                            i++;
-                        } else {
-                            i++;
-                            products.get(i).setQuantity(product2.getQuantity());
-                        }
-                    }
-                }
-
-
-                driverInventoryAdapter = new DriverInventoryAdapter(DriverInventory.this,products);
-                recyclerViewinv.setAdapter(driverInventoryAdapter);
-
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
      //   int j=0;
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.driver_bottom_navigation);
@@ -146,6 +116,32 @@ public class DriverInventory extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+    }
+
+    private void getDriverinv() {
+        myRefinvd.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int i=0,index;
+                QuanProduct temp;
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    product2 = dataSnapshot.getValue(QuanProduct.class);
+                    if (product2.find(products)!=-1) {
+                        index=product2.find(products);
+                        products.get(index).setQuantity(product2.getQuantity());
+                    }
+
+                }
+                driverInventoryAdapter = new DriverInventoryAdapter(DriverInventory.this,(ArrayList<QuanProduct>) products);
+                recyclerViewinv.setAdapter(driverInventoryAdapter);
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

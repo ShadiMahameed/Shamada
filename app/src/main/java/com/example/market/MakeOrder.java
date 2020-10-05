@@ -101,12 +101,12 @@ public class MakeOrder extends AppCompatActivity {
 
         f = 0;
         for (int i = 0; i < products.size(); i++){
-            if(products.get(i).getQuantity()==0) {
+            if(products.get(i).getQuantity().equals("0")) {
                 products.remove(products.get(i));
                 i--;
             }
             else
-            f += (Float.parseFloat(products.get(i).getPrice()))*(products.get(i).getQuantity());
+            f += (Float.parseFloat(products.get(i).getPrice()))*(Integer.parseInt(products.get(i).getQuantity()));
         }
         userN.setText(user.getName());
         FinalPrice.setText("Final price: "+f+"ILS");

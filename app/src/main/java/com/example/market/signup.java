@@ -172,7 +172,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                                             for(DataSnapshot dataSnapshot : snapshot.getChildren())
                                             {
                                                 product=dataSnapshot.getValue(Product.class);
-                                                driverinv.put(product.getName(),new QuanProduct(product,0) );
+                                                driverinv.put(product.getName(),new QuanProduct(product,"0"));
                                             }
                                             myRefinv.child(Name).updateChildren(driverinv);
                                         }

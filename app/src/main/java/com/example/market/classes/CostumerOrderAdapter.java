@@ -41,7 +41,7 @@ public class CostumerOrderAdapter extends RecyclerView.Adapter<CostumerOrderAdap
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.name.setText(products.get(position).getName());
         holder.price.setText(products.get(position).getPrice());
-        holder.quantity.setHint(products.get(position).getQuantity()+"");
+        holder.quantity.setHint(products.get(position).getQuantity());
         Picasso.get().load(products.get(position).getImageURL()).into(holder.photo);
 
         holder.changeQuan.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,7 @@ public class CostumerOrderAdapter extends RecyclerView.Adapter<CostumerOrderAdap
             public void onClick(View v) {
 
                 if((Pattern.compile("[0-9]*+").matcher(holder.quantity.getText().toString().trim()).matches())) {
-                    products.get(position).setQuantity(Integer.parseInt(holder.quantity.getText().toString().trim()));
+                    products.get(position).setQuantity(holder.quantity.getText().toString().trim());
                     Toast.makeText(v.getContext(), "Quantity changed in the chart", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(v.getContext(), "Quantity Should be Integer", Toast.LENGTH_LONG).show();

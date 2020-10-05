@@ -92,7 +92,7 @@ public class DriverOrders extends AppCompatActivity {
                     {
                         if(inv.getProducts().contains(quantproducts.get(i)))
                             index=inv.getProducts().indexOf(quantproducts.get(i));
-                       if(quantproducts.get(i).getQuantity()>inv.getProducts().get(index).getQuantity())
+                       if(Integer.parseInt(quantproducts.get(i).getQuantity())>Integer.parseInt(inv.getProducts().get(index).getQuantity()))
                        {
                            flag=false;
                        }
@@ -101,7 +101,6 @@ public class DriverOrders extends AppCompatActivity {
                     {
                         orders.add(o);
                     }
-
                }
 
                 recyclerView.setAdapter(new driverOrdersAdapter(orders,getApplicationContext()));

@@ -79,7 +79,7 @@ public class CostumerOrder extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
                     product=dataSnapshot.getValue(Product.class);
-                    products.add(new QuanProduct(product,0));
+                    products.add(new QuanProduct(product,"0"));
                 }
                 adapter = new CostumerOrderAdapter(CostumerOrder.this,products);
                 recyclerView.setAdapter(adapter);

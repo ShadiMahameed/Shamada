@@ -39,7 +39,7 @@ public class DriverInventoryAdapter extends RecyclerView.Adapter<DriverInventory
     @Override
     public void onBindViewHolder(@NonNull InventoryViewHolder holder, final int position) {
         holder.pronamein.setText(quanProducts.get(position).getName());
-        holder.propricein.setText(quanProducts.get(position).getQuantity()+"");
+        holder.propricein.setText(quanProducts.get(position).getQuantity());
         Picasso.get().load(quanProducts.get(position).getImageURL()).into(holder.proimagein);
         holder.addquan.addTextChangedListener(new TextWatcher() {
             @Override
@@ -49,7 +49,7 @@ public class DriverInventoryAdapter extends RecyclerView.Adapter<DriverInventory
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int newval = Integer.parseInt(s.toString().trim());
+                String newval = s.toString().trim();
                 quanProducts.get(position).setQuantity(newval);
             }
 

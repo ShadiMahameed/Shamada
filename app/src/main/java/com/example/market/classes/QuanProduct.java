@@ -4,9 +4,11 @@ package com.example.market.classes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class QuanProduct extends Product implements Parcelable {
 
-    private int quantity=0;
+    private String quantity="0";
 
 
     public QuanProduct()
@@ -21,29 +23,28 @@ public class QuanProduct extends Product implements Parcelable {
     public QuanProduct(String n, String p, String i) {
         super(n, p, i);
     }
-    public QuanProduct(Product p,int quan){
+
+    public QuanProduct(Product p,String quan){
         super(p);
         quantity=quan;
     }
 //this is for commit
 
     protected QuanProduct(Parcel in) {
-        quantity = in.readInt();
+        quantity = in.readString();
         name = in.readString();
         price = in.readString();
         imageURL = in.readString();
     }
 
 
-
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-
 
     public static final Creator<QuanProduct> CREATOR = new Creator<QuanProduct>() {
         @Override
@@ -64,10 +65,21 @@ public class QuanProduct extends Product implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(quantity);
+        dest.writeString(quantity);
         dest.writeString(name);
         dest.writeString(price);
         dest.writeString(imageURL);
 
+    }
+    public int find(ArrayList<QuanProduct> p)
+    {
+     for(int i =0 ;i<p.size();i++)
+     {
+         if(name.equals(p.get(i).getName()))
+         {
+             return i;
+         }
+     }
+     return -1;
     }
 }
