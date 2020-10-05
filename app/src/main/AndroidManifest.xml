@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MakeOrder"></activity>
+        <activity android:name=".taken_order"></activity>
+        <activity android:name=".MakeOrder" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
