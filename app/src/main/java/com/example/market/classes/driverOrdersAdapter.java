@@ -1,28 +1,39 @@
 package com.example.market.classes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.market.DriverOrders;
+import com.example.market.MainActivity;
 import com.example.market.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapter.ViewHolder> {
 
-    ArrayList<Order> orders = new ArrayList<Order>();
+    ArrayList<Order> orders;
+    ArrayList<String> nameInDB;
     Context context;
 
-    public driverOrdersAdapter(ArrayList<Order> orders, Context context) {
+    public driverOrdersAdapter(ArrayList<Order> orders, ArrayList<String> nameInDB, Context context) {
         this.orders = orders;
+        this.nameInDB = nameInDB;
         this.context = context;
     }
 
@@ -35,23 +46,26 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.name.setText(orders.get(position).getCostumerName());
         holder.location.setText(orders.get(position).getLocation());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' hh:mm a z");
-//
-//        LocalDateTime f=orders.get(position).getDateAndTime();
-//        String time="";
-//        if(f != null)
-//            time = formatter.format(f);
-//        if(!time.isEmpty() && time!=null)
-//            holder.time.setText(time);
+
+
         holder.takeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference UntakenOrders = database.getReference().child("UnTakenOrders");
+                DatabaseReference TakenOrdersDB = database.getReference().child("TakenOrders");
+
+                UntakenOrders.child(nameInDB.get(position)).removeValue();
+                String json = new Gson().toJson(orders.get(position));
+                TakenOrdersDB.child(MainActivity.getUser().getName()).setValue(json);
+                Toast.makeText(context,"Order Taken",Toast.LENGTH_LONG).show();
+                move();
 
 
-                //todo ordeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer
+
 
 
             }
@@ -76,6 +90,12 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
             time = itemView.findViewById(R.id.Time);
             takeOrder =itemView.findViewById(R.id.Choose);
         }
+    }
+
+
+
+    void move(){
+        context.startActivity(new Intent(context,DriverOrders.class));
     }
 
 }

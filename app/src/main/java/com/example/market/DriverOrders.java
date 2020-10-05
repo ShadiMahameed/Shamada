@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.market.classes.CostumerOrderAdapter;
 import com.example.market.classes.Driver;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
@@ -33,10 +35,11 @@ import java.util.List;
 
 public class DriverOrders extends AppCompatActivity {
 
-    ArrayList<Order> orders = new ArrayList<Order>();
+    ArrayList<Order> orders = new ArrayList();
+    ArrayList<String> nameInDB = new ArrayList<>();
     List<QuanProduct> quantproducts=new ArrayList<QuanProduct>();
     FirebaseDatabase database;
-    DatabaseReference inventory,UntakenOrders;
+    DatabaseReference inventory,UntakenOrders,TakenOrders;
     User driver;
     ArrayList<QuanProduct> products = new ArrayList<QuanProduct>();
     Inventory inv;
@@ -52,9 +55,7 @@ public class DriverOrders extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_orders);
 
-        {
-            //todo check if there is a taken order
-        }
+
 
         recyclerView=(RecyclerView) findViewById(R.id.recyclerorderdriver);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -63,7 +64,24 @@ public class DriverOrders extends AppCompatActivity {
         driver=MainActivity.getUser();
         database = FirebaseDatabase.getInstance();
         inventory = database.getReference().child("Inventory").child(driver.getName());
+        TakenOrders = database.getReference().child("takenOrders");
         UntakenOrders=database.getReference().child("UnTakenOrders");
+
+
+        Query getOrder = TakenOrders.child(MainActivity.getUser().getName());
+        getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Toast.makeText(getApplicationContext(),"Deliver order first",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         inventory.addValueEventListener(new ValueEventListener() {
             @Override
@@ -100,10 +118,11 @@ public class DriverOrders extends AppCompatActivity {
                     if(flag==true)
                     {
                         orders.add(o);
+                        nameInDB.add(dataSnapshot.getKey());
                     }
                }
 
-                recyclerView.setAdapter(new driverOrdersAdapter(orders,getApplicationContext()));
+                recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -36,7 +36,7 @@ public class taken_order extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         TakenOrdersDB = database.getReference().child("takenOrders");
-        TakenOrdersDB = database.getReference().child("deliveredOrders");
+        deliveredOrdersDB = database.getReference().child("deliveredOrders");
 
 
         name = findViewById(R.id.costumer_name);
@@ -82,7 +82,7 @@ public class taken_order extends AppCompatActivity {
                 String json = new Gson().toJson(order);
                 deliveredOrdersDB.child(order.getCostumerName()).child(R.nextInt()+"").setValue(json);
                 Toast.makeText(getApplicationContext(),"Order delivered",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
+                startActivity(new Intent(getApplicationContext(),DriverOrders.class));
             }
         });
 
