@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 
 
@@ -52,6 +53,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationManager locationManager;
     Geocoder dest,source;
+    Button btnvieworder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,30 +61,13 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_navigation);
 
-
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.driver_bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_map);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        btnvieworder=(Button)findViewById(R.id.btnDelivered);
+        btnvieworder.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_inventory:
-                        startActivity(new Intent(getApplicationContext(), DriverInventory.class));
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.nav_home_driver:
-                        startActivity(new Intent(getApplicationContext(), DriverOrders.class));
-                        overridePendingTransition(0, 0);
-                        break;
-                    case R.id.nav_map:
-                        break;
-                }
-
-                return false;
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), taken_order.class));
             }
         });
-
         searchView = findViewById(R.id.sv_location);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
 
@@ -200,23 +185,43 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
 
         mapFragment.getMapAsync(this);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.driver_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_map);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_inventory:
+                        startActivity(new Intent(getApplicationContext(), DriverInventory.class));
+                        overridePendingTransition(0, 0);
+                        break;
+                    case R.id.nav_home_driver:
+                        startActivity(new Intent(getApplicationContext(), DriverOrders.class));
+                        overridePendingTransition(0, 0);
+                        break;
+                    case R.id.nav_map:
+                        break;
+                }
 
+                return false;
+            }
+        });
         return;
     }
 
     private void DisplayTrack(String currentLocation, String location) {
-         try {
-             Uri uri = Uri.parse("https://www.google.co.in/maps/dir/"+currentLocation+"/"+location);
-             Intent intent=new Intent(Intent.ACTION_VIEW,uri);
-             intent.setPackage("com.google.android.apps.maps");
-             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-             startActivity(intent);
-         }catch (ActivityNotFoundException e){
-             Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
-             Intent intent=new Intent(Intent.ACTION_VIEW,uri);
-             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-             startActivity(intent);
-         }
+        try {
+            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/"+currentLocation+"/"+location);
+            Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }catch (ActivityNotFoundException e){
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 
     @Override
