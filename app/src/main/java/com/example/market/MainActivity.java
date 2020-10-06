@@ -141,4 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static User getUser() {
         return user;
     }
+    public static void setUser(User u){
+        user=new User(u);
+    }
 }

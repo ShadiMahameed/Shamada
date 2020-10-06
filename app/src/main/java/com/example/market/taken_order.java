@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class taken_order extends AppCompatActivity {
+    Random random = new Random();
     FirebaseDatabase database;
     DatabaseReference TakenOrdersDB,deliveredOrdersDB;
     Button order_done;
@@ -43,6 +44,7 @@ public class taken_order extends AppCompatActivity {
     ArrayList<QuanProduct> inventoryupdate,removeorder;
     Map<String, Object> invnew;
      DatabaseReference inventory,inventorydriver;
+     User driver=MainActivity.getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +113,6 @@ public class taken_order extends AppCompatActivity {
                             product2 = dataSnapshot.getValue(QuanProduct.class);
                             inventoryupdate.add(product2);
                         }
-                        UpdateInventory();
                     }
 
                     @Override
@@ -119,6 +120,7 @@ public class taken_order extends AppCompatActivity {
 
                     }
                 });
+                UpdateInventory();
             }
         });
     }
@@ -137,12 +139,12 @@ public class taken_order extends AppCompatActivity {
         {
             invnew.put(inventoryupdate.get(i).getName(),inventoryupdate.get(i) );
         }
-        inventorydriver.child(MainActivity.getUser().getName()).updateChildren(invnew);
+        inventorydriver.child(driver.getName()).updateChildren(invnew);
 
-        final Random R = new Random();
+
         TakenOrdersDB.child(MainActivity.getUser().getName()).removeValue();
         String json = new Gson().toJson(order);
-        deliveredOrdersDB.child(order.getCostumerName()).child(R.nextInt()+"").setValue(json);
+        deliveredOrdersDB.child(order.getCostumerName()).push().setValue(json);
         Toast.makeText(getApplicationContext(),"Order delivered",Toast.LENGTH_LONG).show();
         finishAffinity();
         startActivity(new Intent(getApplicationContext(),DriverOrders.class));

@@ -160,6 +160,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                                 Toast.makeText(getApplicationContext(),"User Registered Successfully",Toast.LENGTH_LONG).show();
                                 user=new User(Name,Email,radioButton.getText().toString(),phone);
                                 myRef.child(Name).setValue(user);
+                                MainActivity.setUser(user);
 
                                 if ("Costumer".equals(user.getType())) {
                                     startActivity(new Intent(getApplicationContext(), CostumerOrder.class));
