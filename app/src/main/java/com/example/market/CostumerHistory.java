@@ -47,6 +47,7 @@ public class CostumerHistory extends AppCompatActivity {
         DeliveredOrderssDB.child(MainActivity.getUser().getName()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                orders.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren())
                 {
                     if (dataSnapshot.exists()) {

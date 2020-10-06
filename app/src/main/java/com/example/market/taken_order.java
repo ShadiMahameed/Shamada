@@ -45,6 +45,8 @@ public class taken_order extends AppCompatActivity {
     Map<String, Object> invnew;
      DatabaseReference inventory,inventorydriver;
      User driver=MainActivity.getUser();
+     long num;
+     int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,24 @@ public class taken_order extends AppCompatActivity {
             }
         });
 
+        inventory.addListenerForSingleValueEvent(new ValueEventListener() {
+            QuanProduct product2;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                num=snapshot.getChildrenCount();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    product2 = dataSnapshot.getValue(QuanProduct.class);
+                    inventoryupdate.add(product2);
+                    count++;
+                }
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,22 +123,6 @@ public class taken_order extends AppCompatActivity {
         order_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                inventory.addValueEventListener(new ValueEventListener() {
-                    QuanProduct product2;
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            product2 = dataSnapshot.getValue(QuanProduct.class);
-                            inventoryupdate.add(product2);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
                 UpdateInventory();
             }
         });
