@@ -63,7 +63,6 @@ public class taken_order extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         goBack=(ImageButton) findViewById(R.id.go_back);
         order_done=(Button) findViewById(R.id.order_done);
-
         name = findViewById(R.id.costumer_name);
         location = findViewById(R.id.location);
         time = findViewById(R.id.date_time);
@@ -120,13 +119,8 @@ public class taken_order extends AppCompatActivity {
 
                     }
                 });
-                //todo get inventory and remove delivered products
             }
         });
-
-
-
-
     }
 
     private void UpdateInventory() {
@@ -150,6 +144,7 @@ public class taken_order extends AppCompatActivity {
         String json = new Gson().toJson(order);
         deliveredOrdersDB.child(order.getCostumerName()).child(R.nextInt()+"").setValue(json);
         Toast.makeText(getApplicationContext(),"Order delivered",Toast.LENGTH_LONG).show();
+        finishAffinity();
         startActivity(new Intent(getApplicationContext(),DriverOrders.class));
 
 
@@ -161,4 +156,5 @@ public class taken_order extends AppCompatActivity {
         price.setText(order.getPrice());
         pay_method.setText(order.getPaymentMethod());
     }
+
 }

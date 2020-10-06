@@ -50,6 +50,7 @@ public class DriverInventory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_inventory);
+    //    taken_order.setorder();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Product");
         myRefinv=database.getReference().child("Inventory");
@@ -69,9 +70,9 @@ public class DriverInventory extends AppCompatActivity {
                 }
                 myRefinv.child(driver.getName()).updateChildren(invnew);
                 Toast.makeText(getApplicationContext(),"Inventory has been updated",Toast.LENGTH_SHORT).show();
-                Intent intent=getIntent();
+                //Intent intent=getIntent();
                 finish();
-                startActivity(intent);
+                startActivity(getIntent());
             }
         });
 

@@ -40,7 +40,7 @@ public class DriverOrders extends AppCompatActivity {
     List<QuanProduct> quantproducts=new ArrayList<QuanProduct>();
     FirebaseDatabase database;
     DatabaseReference inventory,UntakenOrders,TakenOrders;
-    User driver;
+    static User driver=MainActivity.getUser();
     ArrayList<QuanProduct> products = new ArrayList<QuanProduct>();
     Inventory inv;
     RecyclerView recyclerView;
@@ -61,14 +61,13 @@ public class DriverOrders extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        driver=MainActivity.getUser();
         database = FirebaseDatabase.getInstance();
         TakenOrders = database.getReference().child("TakenOrders");
         UntakenOrders=database.getReference().child("UnTakenOrders");
 
-        inventory = database.getReference().child("Inventory").child(MainActivity.getUser().getName());
+        inventory = database.getReference().child("Inventory").child(driver.getName());
 
-        Query getOrder = TakenOrders.child(MainActivity.getUser().getName());
+        Query getOrder = TakenOrders.child(driver.getName());
         getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -106,7 +105,7 @@ public class DriverOrders extends AppCompatActivity {
                                 {
                                     if(inv.getProducts().contains(quantproducts.get(i)))
                                         index=inv.getProducts().indexOf(quantproducts.get(i));
-                                    if(Integer.parseInt(quantproducts.get(i).getQuantity())>Integer.parseInt(inv.getProducts().get(index).getQuantity()))
+                                    if(Float.parseFloat(quantproducts.get(i).getQuantity())>Float.parseFloat(inv.getProducts().get(index).getQuantity()))
                                     {
                                         flag=false;
                                     }
