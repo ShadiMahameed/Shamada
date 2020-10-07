@@ -2,12 +2,15 @@ package com.example.market.classes;
 
 import android.content.pm.PackageManager;
 
+import com.example.market.DriverOrders;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class Order {
+public class Order implements Comparable {
     private List<QuanProduct> Products=new ArrayList<QuanProduct>();
     private String Location;
     private String Price;
@@ -94,5 +97,14 @@ public class Order {
 
     public void setStatus(String status) {
         Status = status;
+    }
+
+
+
+
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

@@ -1,7 +1,15 @@
 package com.example.market.classes;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Telephony;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +32,11 @@ import com.google.gson.Gson;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.core.content.ContextCompat.startActivity;
+import static androidx.core.content.PermissionChecker.checkSelfPermission;
+import static com.google.android.gms.auth.api.signin.GoogleSignIn.requestPermissions;
 
 public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapter.ViewHolder> {
 //5osh b6eze
@@ -65,7 +76,7 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
                 String json = new Gson().toJson(orders.get(position));
                 TakenOrdersDB.child(MainActivity.getUser().getName()).setValue(json);
                 Toast.makeText(context,"Order Taken",Toast.LENGTH_LONG).show();
-                move();
+                move(position);
 
 
 
@@ -97,9 +108,18 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
 
 
 
-    void move() {
+    void move(int position) {
+
+
+
+
         Intent i = new Intent(context, DriverNavigation.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         context.startActivity(i);
     }
+
+
+
+
 }
