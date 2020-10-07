@@ -27,7 +27,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.market.classes.DriverTakenOrderAdapter;
 import com.example.market.classes.Order;
+import com.example.market.classes.QuanProduct;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,6 +52,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,12 +68,34 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
     LocationManager locationManager;
     Geocoder dest,source;
     Button btnvieworder;
+    Order order;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_navigation);
+        database = FirebaseDatabase.getInstance();
+        TakenOrdersDB = database.getReference().child("TakenOrders");
+
+        Query getOrder = TakenOrdersDB.child(MainActivity.getUser().getName());
+        getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    String s = snapshot.getValue(String.class);
+                    order = new Gson().fromJson(s, Order.class);
+                    searchView.setQuery(order.getLocation(),false);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
+
+            }
+        });
 
         btnvieworder=(Button)findViewById(R.id.btnDelivered);
         btnvieworder.setOnClickListener(new View.OnClickListener() {

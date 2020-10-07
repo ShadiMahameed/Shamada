@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtPassword.requestFocus();
             return;
         }
-       // Query checkuser = myRef.orderByChild("name").equalTo(Name);
         Query checkuser = myRef.child(Name);
        checkuser.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
@@ -106,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    setUser(user);
                     Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_LONG).show();
                     if ("Costumer".equals(Type)) {
                         startActivity(new Intent(getApplicationContext(), CostumerOrder.class));

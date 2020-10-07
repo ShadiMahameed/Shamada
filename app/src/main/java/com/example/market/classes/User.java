@@ -27,10 +27,10 @@ public class User {
     }
     public User(User user)
     {
-        this.Name=user.getName();
-        this.Email=user.getEmail();
-        this.Type=user.getType();
-        this.Phone=user.getPhone();
+            this.Name = user.getName();
+            this.Email = user.getEmail();
+            this.Type = user.getType();
+            this.Phone = user.getPhone();
     }
 
     public String getPhone() {

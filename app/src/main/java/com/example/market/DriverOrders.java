@@ -19,6 +19,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.market.classes.CostumerOrderAdapter;
@@ -56,12 +58,13 @@ public class DriverOrders extends AppCompatActivity {
     List<QuanProduct> quantproducts=new ArrayList<QuanProduct>();
     FirebaseDatabase database;
     DatabaseReference inventory,UntakenOrders,TakenOrders;
-    static User driver=MainActivity.getUser();
+    //static User driver=MainActivity.getUser();
     ArrayList<QuanProduct> products = new ArrayList<QuanProduct>();
     Inventory inv;
     RecyclerView recyclerView;
     int index=0;
     private boolean mLocationPermissionGranted=false;
+    Button btnsignoutdriver;
 
 
 
@@ -71,6 +74,13 @@ public class DriverOrders extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_orders);
+        btnsignoutdriver=(Button) findViewById(R.id.btnSignoutDriver);
+        btnsignoutdriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
 
 
 
@@ -84,9 +94,9 @@ public class DriverOrders extends AppCompatActivity {
         TakenOrders = database.getReference().child("TakenOrders");
         UntakenOrders=database.getReference().child("UnTakenOrders");
 
-        inventory = database.getReference().child("Inventory").child(driver.getName());
+        inventory = database.getReference().child("Inventory").child(MainActivity.getUser().getName());
 
-        Query getOrder = TakenOrders.child(driver.getName());
+        Query getOrder = TakenOrders.child(MainActivity.getUser().getName());
         getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -106,7 +116,7 @@ public class DriverOrders extends AppCompatActivity {
                                 p = dataSnapshot.getValue(QuanProduct.class);
                                 products.add(p);
                             }
-                            inv = new Inventory(products,driver.getName());
+                            inv = new Inventory(products,MainActivity.getUser().getName());
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -116,6 +126,7 @@ public class DriverOrders extends AppCompatActivity {
                     UntakenOrders.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            quantproducts.clear();
                             for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 Order o = new Gson().fromJson(dataSnapshot.getValue(String.class),Order.class);
                                 quantproducts=o.getProducts();
