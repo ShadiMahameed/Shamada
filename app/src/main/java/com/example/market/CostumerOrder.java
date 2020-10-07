@@ -13,6 +13,7 @@ import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class CostumerOrder extends AppCompatActivity {
     CostumerOrderAdapter adapter;
     Product product;
     ImageButton btnClear,btnGotoCart;
+    Button signout;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -45,6 +47,14 @@ public class CostumerOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_costumer_order);
+        signout = findViewById(R.id.signout_costumr);
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+            }
+        });
 
         recyclerView=(RecyclerView) findViewById(R.id.recyclerOrderCostumer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

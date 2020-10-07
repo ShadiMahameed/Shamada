@@ -74,6 +74,12 @@ public class Admin extends AppCompatActivity implements View.OnClickListener  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        findViewById(R.id.admin_signout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
 
         recyclerView = findViewById(R.id.recyclerAdmin);
         recyclerView.setHasFixedSize(true);

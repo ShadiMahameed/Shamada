@@ -1,5 +1,6 @@
 package com.example.market.classes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +35,9 @@ public class costumer_history_adapter extends RecyclerView.Adapter<costumer_hist
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.date_time.setText(orders.get(position).getDateAndTime()); // todo
-        holder.method.setText(orders.get(position).getPaymentMethod());
-        holder.location.setText(orders.get(position).getLocation());
-        holder.price.setText(orders.get(position).getPrice());
+        holder.method.setText("paid with "+orders.get(position).getPaymentMethod());
+        holder.location.setText("Delivered to "+orders.get(position).getLocation());
+        holder.price.setText("The cost was "+orders.get(position).getPrice());
         holder.id.setText("Order ID: "+position);
 
     }

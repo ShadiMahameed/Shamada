@@ -36,27 +36,36 @@
 
     <ImageButton
         android:id="@+id/btngoCart"
-        android:layout_width="200dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btnclearCart"
         app:srcCompat="@drawable/ic_baseline_shopping_cart_24"
         tools:ignore="VectorDrawableCompat" />
 
     <ImageButton
         android:id="@+id/btnclearCart"
-        android:layout_width="200dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toStartOf="@+id/btngoCart"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/signout_costumr"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <Button
+        android:id="@+id/signout_costumr"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="4dp"
+        android:text="Sign out"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
