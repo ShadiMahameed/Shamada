@@ -1,5 +1,23 @@
 package com.example.market.classes;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+
 public class User {
 
     private String Name;
@@ -64,5 +82,4 @@ public class User {
     public void setEmail(String email) {
         this.Email = email;
     }
-
 }

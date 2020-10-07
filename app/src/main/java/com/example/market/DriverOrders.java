@@ -9,12 +9,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +39,7 @@ import com.example.market.classes.User;
 import com.example.market.classes.driverOrdersAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +49,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +72,12 @@ public class DriverOrders extends AppCompatActivity {
     int index=0;
     private boolean mLocationPermissionGranted=false;
     Button btnsignoutdriver;
+    LocationManager locationManager;
+    Geocoder dest,source;
+    String currentLocation;
+    Order order;
+    double longitude,latitude;
+    Address address,address2;
 
 
 
@@ -286,5 +299,111 @@ public class DriverOrders extends AppCompatActivity {
             }
         }
 
+    }
+
+
+
+    public double getDistance(String location)
+    {
+       locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return 0;
+        }
+        if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+        {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                     latitude=location.getLatitude();
+                     longitude=location.getLongitude();
+                    LatLng latLng=new LatLng(latitude,longitude);
+                    source = new Geocoder(getApplicationContext());
+                    try {
+                        List<Address> addressListsrs=source.getFromLocation(latitude,longitude,1);
+                        currentLocation=addressListsrs.get(0).getLocality()+','+addressListsrs.get(0).getCountryName();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+                @Override
+                public void onProviderEnabled(String provider) {
+                }
+                @Override
+                public void onProviderDisabled(String provider) {
+                }
+            });
+        }
+        else
+        {
+            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        double latitude=location.getLatitude();
+                        double longtitude=location.getLongitude();
+                        LatLng latLng=new LatLng(latitude,longtitude);
+                        source = new Geocoder(getApplicationContext());
+                        try {
+                            List<Address> addressListsrs=source.getFromLocation(latitude,longtitude,1);
+                            currentLocation=addressListsrs.get(0).getLocality()+','+addressListsrs.get(0).getCountryName();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                });
+            }
+        }
+       //String location2 = "California";
+        List<Address> addressListdest = null;
+
+        if (location != null || !location.equals("")) {
+            dest = new Geocoder(DriverOrders.this);
+            try {
+                addressListdest = dest.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            address = addressListdest.get(0);
+           // LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+        }
+
+        double longDiff=longitude-address.getLongitude();
+        double distance=((Math.sin(deg2rad(latitude)))   * (Math.sin(deg2rad(address.getLatitude())))
+                       +(Math.cos(deg2rad(latitude)))   * (Math.cos(deg2rad(address.getLatitude()))))
+                       *Math.cos(deg2rad(longDiff));
+        distance=Math.acos(distance);
+        distance=rad2deg(distance);
+        distance=distance*60*1.1515;
+        distance=distance*1.609344;
+
+        System.out.println(distance);
+        return distance;
+    }
+    private double deg2rad(double lat1)
+    {
+        return (lat1*Math.PI/180.0);
+    }
+    private double rad2deg(double distance)
+    {
+        return (distance * 180.0/Math.PI);
     }
 }

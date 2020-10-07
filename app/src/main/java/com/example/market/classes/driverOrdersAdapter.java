@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import static androidx.core.content.ContextCompat.startActivity;
 
 public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapter.ViewHolder> {
-
+//5osh b6eze
     ArrayList<Order> orders;
     ArrayList<String> nameInDB;
     Context context;
