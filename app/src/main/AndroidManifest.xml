@@ -16,10 +16,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".taken_order"></activity>
         <activity android:name=".MakeOrder" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
+
+
+
+
 
         <activity android:name=".DriverNavigation" />
         <activity android:name=".DriverInventory" />
