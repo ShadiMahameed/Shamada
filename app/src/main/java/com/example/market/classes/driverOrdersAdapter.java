@@ -51,6 +51,7 @@ public class driverOrdersAdapter extends RecyclerView.Adapter<driverOrdersAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.name.setText(orders.get(position).getCostumerName());
         holder.location.setText(orders.get(position).getLocation());
+        holder.time.setText(orders.get(position).getDateAndTime());
 
 
         holder.takeOrder.setOnClickListener(new View.OnClickListener() {

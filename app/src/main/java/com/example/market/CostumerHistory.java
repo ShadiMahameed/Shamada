@@ -38,7 +38,7 @@ public class CostumerHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_costumer_history);
 
-        recyclerView=(RecyclerView) findViewById(R.id.history_orders_recycler);
+        recyclerView= findViewById(R.id.history_orders_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         database = FirebaseDatabase.getInstance();

@@ -33,7 +33,7 @@ public class costumer_history_adapter extends RecyclerView.Adapter<costumer_hist
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.date_time.setText(orders.get(position).getDateAndTime()); // todo
+        holder.date_time.setText(orders.get(position).getDateAndTime()); // todo
         holder.method.setText(orders.get(position).getPaymentMethod());
         holder.location.setText(orders.get(position).getLocation());
         holder.price.setText(orders.get(position).getPrice());

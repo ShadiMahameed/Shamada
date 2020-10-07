@@ -11,7 +11,7 @@ public class Order {
     private List<QuanProduct> Products=new ArrayList<QuanProduct>();
     private String Location;
     private String Price;
-    private LocalDateTime DateAndTime;
+    private String DateAndTime;
     private String CostumerName;
     private String Status;
 
@@ -19,16 +19,12 @@ public class Order {
         return PaymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        PaymentMethod = paymentMethod;
-    }
-
     private String PaymentMethod;
 //ready new
     public Order() {
     }
 
-    public Order(List<QuanProduct> products, String location, String price, LocalDateTime dateAndTime, String costumerName,String paymentMethod) {
+    public Order(List<QuanProduct> products, String location, String price, String dateAndTime, String costumerName,String paymentMethod) {
         Products = products;
         Location = location;
         Price = price;
@@ -76,11 +72,11 @@ public class Order {
         Products = products;
     }
 
-    public LocalDateTime getDateAndTime() {
+    public String getDateAndTime() {
         return DateAndTime;
     }
 
-    public void setDateAndTime(LocalDateTime dateAndTime) {
+    public void setDateAndTime(String dateAndTime) {
         DateAndTime = dateAndTime;
     }
 

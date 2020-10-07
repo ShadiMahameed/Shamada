@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -256,7 +258,10 @@ public class MakeOrder extends AppCompatActivity {
      void InsertOrderToDB(){
         String location_ = location.getText().toString().trim();
         String name_ = userN.getText().toString().trim();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime localTime = LocalDateTime.now(ZoneId.of("Israel"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
+        String now = localTime.format(dtf).substring(1).trim();
+        System.out.println(now);
         final Order order = new Order(products, location_,f+"", now, name_,payementmethod);
         String json = new Gson().toJson(order);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -264,6 +269,7 @@ public class MakeOrder extends AppCompatActivity {
         Random r =new Random();
         int d= r.nextInt();
         myRef.child(d+"").setValue(json);
+        /*
         final ArrayList<Order> orders = new ArrayList<Order>();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -283,5 +289,7 @@ public class MakeOrder extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        */
+
     }
 }

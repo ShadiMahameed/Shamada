@@ -50,7 +50,6 @@ public class DriverInventory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_inventory);
-    //    taken_order.setorder();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Product");
         myRefinv=database.getReference().child("Inventory");
