@@ -51,6 +51,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.example.market.classes.Constants.ERROR_DIALOG_REQUEST;
@@ -139,7 +141,7 @@ public class DriverOrders extends AppCompatActivity {
                     UntakenOrders.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            quantproducts.clear();
+                            orders.clear();
                             for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 Order o = new Gson().fromJson(dataSnapshot.getValue(String.class),Order.class);
                                 quantproducts=o.getProducts();
@@ -160,7 +162,8 @@ public class DriverOrders extends AppCompatActivity {
                                 }
                             }
 
-                            recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
+                            //orders = sort(orders);
+                            recyclerView.setAdapter(new driverOrdersAdapter(sort(orders),nameInDB,getApplicationContext()));
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -406,4 +409,29 @@ public class DriverOrders extends AppCompatActivity {
     {
         return (distance * 180.0/Math.PI);
     }
+
+
+
+    public ArrayList<Order> sort(ArrayList<Order> orders){
+        ArrayList<Order> newOrders=new ArrayList<Order>();
+        int min=0;
+        double dist=getDistance(orders.get(0).getLocation());
+        while(!orders.isEmpty()) {
+            min=0;
+            dist=getDistance(orders.get(0).getLocation());
+            System.out.println(dist);
+            for (int i = 0; i < orders.size(); i++) {
+                if (getDistance(orders.get(i).getLocation()) < dist) {
+                    dist = getDistance(orders.get(i).getLocation());
+                    min = i;
+                }
+            }
+            newOrders.add(orders.get(min));
+            orders.remove(min);
+        }
+
+
+        return newOrders;
+    }
+
 }
