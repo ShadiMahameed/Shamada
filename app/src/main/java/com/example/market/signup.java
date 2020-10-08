@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -49,12 +50,15 @@ public class signup extends AppCompatActivity implements View.OnClickListener
     DatabaseReference myRef,myRefinv,myRefpro;
     Map<String, Object> driverinv;
     Product product;
+    ProgressBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        bar = findViewById(R.id.progressBar_signup);
+        bar.setVisibility(View.GONE);
 
         // t3refat
         txtname=(EditText)findViewById(R.id.txtName);
@@ -74,6 +78,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
 
     }
     private void registerMember() {
+        bar.setVisibility(View.VISIBLE);
          Email = txtemail.getText().toString().trim();
          Name = txtname.getText().toString().trim();
          Pass1 = txtpass.getText().toString().trim();
@@ -83,12 +88,14 @@ public class signup extends AppCompatActivity implements View.OnClickListener
 
         if(Name.isEmpty())
         {
+            bar.setVisibility(View.GONE);
             txtname.setError("Name is required");
             txtname.requestFocus();
             return;
         }
         if(!Pattern.compile("[0-9A-Za-z]*").matcher(Name).matches())
         {
+            bar.setVisibility(View.GONE);
             txtname.setError("Invalid username, Can only contain letters and numbers");
             txtname.requestFocus();
             return;
@@ -101,36 +108,43 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                 if(!snapshot.exists())
                 {
                     if (Email.isEmpty()) {
+                        bar.setVisibility(View.GONE);
                         txtemail.setError("Email is required");
                         txtemail.requestFocus();
                         return;
                     }
                     if (!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
                     {
+                        bar.setVisibility(View.GONE);
                         txtemail.setError("Email is not valid!");
                         txtemail.requestFocus();
                         return;
                     }
                     if(Pass1.isEmpty())
                     {
+                        bar.setVisibility(View.GONE);
                         txtpass.setError("Password is required");
                         txtpass.requestFocus();
                         return;
                     }
                     if(passw2.isEmpty())
                     {
+                        bar.setVisibility(View.GONE);
                         txtpass2.setError("Please Confirm Password");
                         txtpass2.requestFocus();
                         return;
                     }
                     if(!Pass1.equals(passw2))
                     {
+                        bar.setVisibility(View.GONE);
                         txtpass2.setError("Password does not match!");
                         txtpass2.requestFocus();
                         return;
                     }
                     if(rgb.getCheckedRadioButtonId()==-1)
                     {
+                        bar.setVisibility(View.GONE);
+                        bar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "Please select how you would like to use the app", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -141,12 +155,14 @@ public class signup extends AppCompatActivity implements View.OnClickListener
 
                     if(phone.isEmpty())
                     {
+                        bar.setVisibility(View.GONE);
                         txtphone.setError("Phone is required");
                         txtphone.requestFocus();
                         return;
                     }
 
                     if(!Pattern.compile("[0][5][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]").matcher(phone).matches()){
+                        bar.setVisibility(View.GONE);
                         txtphone.setError("Invalid Phone Number");
                         txtphone.requestFocus();
                         return;
@@ -163,6 +179,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                                 MainActivity.setUser(user);
 
                                 if ("Costumer".equals(user.getType())) {
+                                    bar.setVisibility(View.GONE);
                                     startActivity(new Intent(getApplicationContext(), CostumerOrder.class));
                                 }
                                 else
@@ -183,16 +200,21 @@ public class signup extends AppCompatActivity implements View.OnClickListener
 
                                         }
                                     });
+                                    bar.setVisibility(View.GONE);
                                     startActivity(new Intent(getApplicationContext(), DriverOrders.class));
 
                                 }
                             }
                             else
                             {
-                                if(task.getException() instanceof FirebaseAuthUserCollisionException)
-                                    Toast.makeText(getApplicationContext(),"Email Already Registered",Toast.LENGTH_SHORT).show();
-                                else
-                                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                if(task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                    bar.setVisibility(View.GONE);
+                                    Toast.makeText(getApplicationContext(), "Email Already Registered", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    bar.setVisibility(View.GONE);
+                                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
 
                             }
                         }
@@ -201,6 +223,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                 else
                 if(snapshot.exists())
                 {
+                    bar.setVisibility(View.GONE);
                     txtname.setError("Username Taken , please try something else");
                     txtname.requestFocus();
                     return;
@@ -224,6 +247,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
             registerMember();
         if(v.getId()==(R.id.btnBackHome))
         {
+            bar.setVisibility(View.GONE);
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
         }
