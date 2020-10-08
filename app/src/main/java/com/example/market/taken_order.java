@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,6 +22,7 @@ import com.example.market.classes.Order;
 import com.example.market.classes.QuanProduct;
 import com.example.market.classes.User;
 import com.example.market.classes.driverOrdersAdapter;
+import com.google.android.gms.ads.internal.gmsg.HttpClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,12 +31,29 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.nio.channels.AsynchronousChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+
 public class taken_order extends AppCompatActivity {
+
     Random random = new Random();
     FirebaseDatabase database;
     DatabaseReference TakenOrdersDB,deliveredOrdersDB;
@@ -161,5 +182,12 @@ public class taken_order extends AppCompatActivity {
         price.setText(order.getPrice());
         pay_method.setText(order.getPaymentMethod());
     }
+
+
+
+
+
+
+
 
 }
