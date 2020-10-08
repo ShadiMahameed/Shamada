@@ -167,8 +167,10 @@ public class DriverOrders extends AppCompatActivity {
                             }
 
                             //orders = sort(orders);
-                            if(orders.size()>0)
-                            recyclerView.setAdapter(new driverOrdersAdapter(sort(orders),nameInDB,getApplicationContext()));
+                            if(orders.size()>0) {
+                                bar.setVisibility(View.GONE);
+                                recyclerView.setAdapter(new driverOrdersAdapter(sort(orders), nameInDB, getApplicationContext()));
+                            }
                             else
                                 recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
 
