@@ -82,4 +82,7 @@ public class User {
     public void setEmail(String email) {
         this.Email = email;
     }
+
+    void sendMessage(){}
+
 }
