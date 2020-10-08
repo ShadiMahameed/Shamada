@@ -422,6 +422,7 @@ public class DriverOrders extends AppCompatActivity {
 
 
     public ArrayList<Order> sort(ArrayList<Order> orders){
+        ArrayList<String> newnameindb=new ArrayList<String>();
         ArrayList<Order> newOrders=new ArrayList<Order>();
         int min=0;
         double dist=getDistance(orders.get(0).getLocation());
@@ -437,10 +438,16 @@ public class DriverOrders extends AppCompatActivity {
                     min = i;
                 }
             }
+            newnameindb.add(nameInDB.get(min));
             newOrders.add(orders.get(min));
             orders.remove(min);
+            nameInDB.remove(min);
         }
 
+        for(int i=0;i<newnameindb.size();i++)
+        {
+            nameInDB.add(newnameindb.get(i));
+        }
 
         return newOrders;
     }
