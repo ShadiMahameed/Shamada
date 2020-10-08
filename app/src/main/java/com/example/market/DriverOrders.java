@@ -163,7 +163,11 @@ public class DriverOrders extends AppCompatActivity {
                             }
 
                             //orders = sort(orders);
+                            if(orders.size()>0)
                             recyclerView.setAdapter(new driverOrdersAdapter(sort(orders),nameInDB,getApplicationContext()));
+                            else
+                                recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
+
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -308,7 +312,7 @@ public class DriverOrders extends AppCompatActivity {
 
     public double getDistance(String location)
     {
-       locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return 0;
         }
@@ -317,8 +321,8 @@ public class DriverOrders extends AppCompatActivity {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                     latitude=location.getLatitude();
-                     longitude=location.getLongitude();
+                    latitude=location.getLatitude();
+                    longitude=location.getLongitude();
                     LatLng latLng=new LatLng(latitude,longitude);
                     source = new Geocoder(getApplicationContext());
                     try {
@@ -375,7 +379,7 @@ public class DriverOrders extends AppCompatActivity {
                 });
             }
         }
-       //String location2 = "California";
+        //String location2 = "Haifa University";
         List<Address> addressListdest = null;
 
         if (location != null || !location.equals("")) {
@@ -386,19 +390,18 @@ public class DriverOrders extends AppCompatActivity {
                 e.printStackTrace();
             }
             address = addressListdest.get(0);
-           // LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            // LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
         }
 
         double longDiff=longitude-address.getLongitude();
         double distance=((Math.sin(deg2rad(latitude)))   * (Math.sin(deg2rad(address.getLatitude())))
-                       +(Math.cos(deg2rad(latitude)))   * (Math.cos(deg2rad(address.getLatitude()))))
-                       *Math.cos(deg2rad(longDiff));
+                +(Math.cos(deg2rad(latitude)))   * (Math.cos(deg2rad(address.getLatitude()))))
+                *Math.cos(deg2rad(longDiff));
         distance=Math.acos(distance);
         distance=rad2deg(distance);
         distance=distance*60*1.1515;
         distance=distance*1.609344;
 
-        System.out.println(distance);
         return distance;
     }
     private double deg2rad(double lat1)
@@ -419,9 +422,11 @@ public class DriverOrders extends AppCompatActivity {
         while(!orders.isEmpty()) {
             min=0;
             dist=getDistance(orders.get(0).getLocation());
-            System.out.println(dist);
             for (int i = 0; i < orders.size(); i++) {
-                if (getDistance(orders.get(i).getLocation()) < dist) {
+
+                System.out.println(orders.get(i).getLocation()+ dist);
+
+                if (getDistance(orders.get(i).getLocation()) > dist) {
                     dist = getDistance(orders.get(i).getLocation());
                     min = i;
                 }
@@ -435,6 +440,5 @@ public class DriverOrders extends AppCompatActivity {
     }
 
 
-    // nice ass
 
 }
