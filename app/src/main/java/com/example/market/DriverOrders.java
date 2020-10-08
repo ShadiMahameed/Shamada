@@ -121,6 +121,7 @@ public class DriverOrders extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
+                    bar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),"Deliver order first",Toast.LENGTH_LONG).show();
                 }
                 else
@@ -172,6 +173,7 @@ public class DriverOrders extends AppCompatActivity {
                                 recyclerView.setAdapter(new driverOrdersAdapter(sort(orders), nameInDB, getApplicationContext()));
                             }
                             else
+                                bar.setVisibility(View.GONE);
                                 recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
 
                         }

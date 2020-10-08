@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
     Geocoder dest,source;
     Button btnvieworder;
     Order order;
+    ProgressBar bar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,8 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
         setContentView(R.layout.activity_driver_navigation);
         database = FirebaseDatabase.getInstance();
         TakenOrdersDB = database.getReference().child("TakenOrders");
+        bar = findViewById(R.id.progressBar_nav);
+        bar.setVisibility(View.VISIBLE);
 
         Query getOrder = TakenOrdersDB.child(MainActivity.getUser().getName());
         getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -148,6 +152,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
                         currentLocation=addressListsrs.get(0).getLocality()+','+addressListsrs.get(0).getCountryName();
                         googleMaps.addMarker(new MarkerOptions().position(latLng).title(currentLocation));
                         googleMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                        bar.setVisibility(View.GONE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -179,6 +184,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
                             currentLocation=addressListsrs.get(0).getLocality()+','+addressListsrs.get(0).getCountryName();
                             googleMaps.addMarker(new MarkerOptions().position(latLng).title(currentLocation));
                             googleMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                            bar.setVisibility(View.GONE);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
