@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.market.classes.CostumerOrderAdapter;
@@ -80,6 +81,7 @@ public class DriverOrders extends AppCompatActivity {
     Order order;
     double longitude,latitude;
     Address address,address2;
+    ProgressBar bar;
 
 
 
@@ -89,6 +91,8 @@ public class DriverOrders extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_orders);
+        bar = findViewById(R.id.progressBar_driver_orders);
+        bar.setVisibility(View.VISIBLE);
         btnsignoutdriver=(Button) findViewById(R.id.btnSignoutDriver);
         btnsignoutdriver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +167,7 @@ public class DriverOrders extends AppCompatActivity {
                             }
 
                             //orders = sort(orders);
+                            bar.setVisibility(View.GONE);
                             recyclerView.setAdapter(new driverOrdersAdapter(sort(orders),nameInDB,getApplicationContext()));
                         }
                         @Override

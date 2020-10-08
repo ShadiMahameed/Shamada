@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.market.classes.User;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText txtEmail,txtPassword;
     FirebaseDatabase database;
     DatabaseReference  myRef;
+    ProgressBar bar;
     static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myRef = database.getReference("User");
         findViewById(R.id.btnSignup1).setOnClickListener(this);
         findViewById(R.id.btnLogin).setOnClickListener(this);
+        bar = findViewById(R.id.progressBar_login);
+        bar.setVisibility(View.GONE);
     }
     private void userLogin()
     {
@@ -100,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void goLogin(String email, String password)
     {
+        bar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -108,17 +113,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setUser(user);
                     Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_LONG).show();
                     if ("Costumer".equals(Type)) {
+                        bar.setVisibility(View.GONE);
                         startActivity(new Intent(getApplicationContext(), CostumerOrder.class));
                     }
                     else
-                    if(Type.equals(("Driver")))
-                        startActivity(new Intent(getApplicationContext(),DriverOrders.class));
+                    if(Type.equals(("Driver"))) {
+                        bar.setVisibility(View.GONE);
+                        startActivity(new Intent(getApplicationContext(), DriverOrders.class));
+                    }
                     else
-                    if(Type.equals("Admin"))
-                        startActivity(new Intent(getApplicationContext(),Admin.class));
+                    if(Type.equals("Admin")) {
+                        bar.setVisibility(View.GONE);
+                        startActivity(new Intent(getApplicationContext(), Admin.class));
+                    }
                 }
                 else
                 {
+                    bar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
