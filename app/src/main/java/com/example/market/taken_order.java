@@ -2,12 +2,18 @@ package com.example.market;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -44,19 +50,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 public class taken_order extends AppCompatActivity {
 
+    User tempuser;
     Random random = new Random();
     FirebaseDatabase database;
-    DatabaseReference TakenOrdersDB,deliveredOrdersDB;
+    DatabaseReference TakenOrdersDB,deliveredOrdersDB,myRef;
     Button order_done;
     ImageButton goBack;
     TextView name,location,time,price,pay_method;
@@ -68,12 +68,14 @@ public class taken_order extends AppCompatActivity {
      User driver=MainActivity.getUser();
      long num;
      int count=0;
+    String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taken_order);
-
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("User");
         database = FirebaseDatabase.getInstance();
         TakenOrdersDB = database.getReference().child("TakenOrders");
         deliveredOrdersDB = database.getReference().child("DeliveredOrders");
@@ -145,8 +147,37 @@ public class taken_order extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UpdateInventory();
+                int permissionCheck= ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS);
+                if(permissionCheck== PackageManager.PERMISSION_GRANTED)
+                {
+                    Mymsg();
+                }
             }
         });
+    }
+
+    private void Mymsg() {
+        String costumername=order.getCostumerName();
+        Query checkuser = myRef.child(costumername);
+        checkuser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    tempuser=snapshot.getValue(User.class);
+                    phone=tempuser.getPhone();
+                    String Msg="Your Delivery from Shamada is outside , please meet the driver";
+                    SmsManager smsManager=SmsManager.getDefault();
+                    smsManager.sendTextMessage(phone,null,Msg,null,null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //String phoneNumber=MainActivity.getUser().getPhone();
     }
 
     private void UpdateInventory() {
