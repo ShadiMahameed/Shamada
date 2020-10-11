@@ -212,6 +212,7 @@ public class taken_order extends AppCompatActivity {
         location.setText(order.getLocation());
         price.setText(order.getPrice());
         pay_method.setText(order.getPaymentMethod());
+        time.setText(order.getDateAndTime());
     }
 
 

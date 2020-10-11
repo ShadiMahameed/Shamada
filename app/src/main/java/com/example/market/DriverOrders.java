@@ -102,8 +102,14 @@ public class DriverOrders extends AppCompatActivity {
         });
 
 
-
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            // while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(DriverOrders.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(DriverOrders.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(DriverOrders.this, new String[]{Manifest.permission.SEND_SMS}, 1);
         recyclerView=(RecyclerView) findViewById(R.id.recyclerorderdriver);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

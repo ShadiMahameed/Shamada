@@ -1,6 +1,7 @@
 package com.example.market;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -71,6 +72,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
     Button btnvieworder;
     Order order;
     ProgressBar bar;
+    boolean rPermissionLocationGranted=false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,15 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
+           // while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+         /*   ActivityCompat.requestPermissions(DriverNavigation.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
+            ActivityCompat.requestPermissions(DriverNavigation.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                startActivity(new Intent(getApplicationContext(),DriverNavigation.class));*/
+
+
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
