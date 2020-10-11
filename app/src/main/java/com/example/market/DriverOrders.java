@@ -81,7 +81,7 @@ public class DriverOrders extends AppCompatActivity {
     Order order;
     double longitude,latitude;
     Address address,address2;
-    ProgressBar bar;
+   // ProgressBar bar;
 
 
 
@@ -91,8 +91,8 @@ public class DriverOrders extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_orders);
-        bar = findViewById(R.id.progressBar_driver_orders);
-        bar.setVisibility(View.VISIBLE);
+       // bar = findViewById(R.id.progressBar_driver_orders);
+       // bar.setVisibility(View.VISIBLE);
         btnsignoutdriver=(Button) findViewById(R.id.btnSignoutDriver);
         btnsignoutdriver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +127,7 @@ public class DriverOrders extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
-                    bar.setVisibility(View.GONE);
+                    //bar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),"Deliver order first",Toast.LENGTH_LONG).show();
                 }
                 else
@@ -175,11 +175,11 @@ public class DriverOrders extends AppCompatActivity {
 
                             //orders = sort(orders);
                             if(orders.size()>0) {
-                                bar.setVisibility(View.GONE);
                                 recyclerView.setAdapter(new driverOrdersAdapter(sort(orders), nameInDB, getApplicationContext()));
+                               // bar.setVisibility(View.GONE);
                             }
                             else
-                                bar.setVisibility(View.GONE);
+                               // bar.setVisibility(View.GONE);
                                 recyclerView.setAdapter(new driverOrdersAdapter(orders,nameInDB,getApplicationContext()));
 
                         }

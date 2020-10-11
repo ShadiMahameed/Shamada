@@ -71,8 +71,8 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
     Geocoder dest,source;
     Button btnvieworder;
     Order order;
-    ProgressBar bar;
-    boolean rPermissionLocationGranted=false;
+    private boolean mLocationPermissionGranted =false;
+   // ProgressBar bar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,8 +81,8 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
         setContentView(R.layout.activity_driver_navigation);
         database = FirebaseDatabase.getInstance();
         TakenOrdersDB = database.getReference().child("TakenOrders");
-        bar = findViewById(R.id.progressBar_nav);
-        bar.setVisibility(View.VISIBLE);
+     //   bar = findViewById(R.id.progressBar_nav);
+     //   bar.setVisibility(View.VISIBLE);
 
         Query getOrder = TakenOrdersDB.child(MainActivity.getUser().getName());
         getOrder.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -132,15 +132,6 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-           // while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-         /*   ActivityCompat.requestPermissions(DriverNavigation.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            startActivity(new Intent(getApplicationContext(),DriverNavigation.class));
-            ActivityCompat.requestPermissions(DriverNavigation.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                startActivity(new Intent(getApplicationContext(),DriverNavigation.class));*/
-
-
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -163,7 +154,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
                         currentLocation=addressListsrs.get(0).getLocality()+','+addressListsrs.get(0).getCountryName();
                         googleMaps.addMarker(new MarkerOptions().position(latLng).title(currentLocation));
                         googleMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        bar.setVisibility(View.GONE);
+                      //  bar.setVisibility(View.GONE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -195,7 +186,7 @@ public class DriverNavigation extends FragmentActivity implements OnMapReadyCall
                             currentLocation=addressListsrs.get(0).getLocality()+','+addressListsrs.get(0).getCountryName();
                             googleMaps.addMarker(new MarkerOptions().position(latLng).title(currentLocation));
                             googleMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                            bar.setVisibility(View.GONE);
+                          //  bar.setVisibility(View.GONE);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
