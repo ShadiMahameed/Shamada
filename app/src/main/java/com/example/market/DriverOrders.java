@@ -81,6 +81,7 @@ public class DriverOrders extends AppCompatActivity {
     Order order;
     double longitude,latitude;
     Address address,address2;
+    long numbercheck;
    // ProgressBar bar;
 
 
@@ -139,6 +140,7 @@ public class DriverOrders extends AppCompatActivity {
                             products.clear();
                             QuanProduct p;
                             for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                               numbercheck= snapshot.getChildrenCount();
                                 p = dataSnapshot.getValue(QuanProduct.class);
                                 products.add(p);
                             }
@@ -153,18 +155,24 @@ public class DriverOrders extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             orders.clear();
+                            nameInDB.clear();
+                            boolean flag;
                             for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 Order o = new Gson().fromJson(dataSnapshot.getValue(String.class),Order.class);
+                                quantproducts.clear();
                                 quantproducts=o.getProducts();
-                                boolean flag=true;
+
+                                flag=true;
                                 for(int i=0;i<quantproducts.size();i++)
                                 {
-                                    if(inv.getProducts().contains(quantproducts.get(i)))
-                                        index=inv.getProducts().indexOf(quantproducts.get(i));
-                                    if(Float.parseFloat(quantproducts.get(i).getQuantity())>Float.parseFloat(inv.getProducts().get(index).getQuantity()))
-                                    {
-                                        flag=false;
+                                    for(int j=0;j<inv.getProducts().size();j++) {
+                                        if (inv.getProducts().get(j).getName().equals(quantproducts.get(i).getName()))
+                                            index = j;
                                     }
+                                    /*if(inv.getProducts().contains(quantproducts.get(i))){
+                                        index=inv.getProducts().indexOf(quantproducts.get(i));*/
+                                    if(Float.parseFloat(quantproducts.get(i).getQuantity()) >  Float.parseFloat((inv.getProducts().get(index).getQuantity())))
+                                        flag=false;
                                 }
                                 if(flag==true)
                                 {
